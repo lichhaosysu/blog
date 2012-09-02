@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<project name="blog" default="war">
+	<property name="src" value="src/main/java" />
+	<property name="resources" value="src/main/resources" />
+	<property name="WebContent" value="src/main/webapp" />
+	<property name="dist" value="build/dist" />
+	<property name="warDest" value="warDest" />
+	<property name="classDest" value="classes" />
+	<property name="source-encoding" value="UTF-8" />
+	<property name="warName" value="blog.war" />
+	<!--编译java源文件所需的jar文件 -->
+	<path id="build-classpath">
+		<fileset dir="build/web-libs">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="build/servlet-libs">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!--清理-->
+	<target name="clean">
+		<delete dir="${dist}" />
+	</target>
+
+	<!-- 初始化，建立相关的文件夹-->
+	<target name="init" depends="clean">
+		<mkdir dir="${dist}" />
+		<mkdir dir="${dist}/${warDest}" />
+		<mkdir dir="${dist}/${classDest}" />
+	</target>
+
+	<!-- 编译java源文件并拷贝到相应的文件夹-->
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${dist}/${classDest}" source="1.6" target="1.6" classpathref="build-classpath" encoding="${source-encoding}" optimize="true" deprecation="false" debug="true" debuglevel="source,lines,vars">
+		</javac>
+	</target>
+
+	<!--拷贝webcontent文件到相应的文件夹-->
+	<target name="copy">
+		<copy todir="${dist}/${warDest}">
+			<fileset dir="${WebContent}" excludes="**/*.jar,**/*.svn,WEB-INF/classes/**" />
+		</copy>
+
+		<copy todir="${dist}/${classDest}">
+			<fileset dir="${src}" excludes="**/*.java,**/*.svn" />
+		</copy>
+
+		<copy todir="${dist}/${classDest}">
+			<fileset dir="${resources}" excludes="**/*.java,**/*.svn" />
+		</copy>
+
+		<!--拷贝部署用的配置文件-->
+
+		<delete file="${dist}/${classDest}/jdbc.properties" />
+		<copy todir="${dist}/${classDest}">
+			<fileset dir="build/file-to-replace" includes="jdbc.properties" />
+		</copy>
+
+		<copy todir="${dist}/${warDest}/WEB-INF">
+			<fileset dir="build/jstl-tlds" includes="*.tld" />
+		</copy>
+
+	</target>
+
+	<!--打包-->
+	<target name="war" depends="compile, copy">
+		<war destfile="${dist}/${warName}">
+			<fileset dir="${dist}/${warDest}" />
+			<lib dir="build/web-libs" />
+			<lib dir="build/servlet-libs" includes="jstl-1.2.jar" />
+			<classes dir="${dist}/${classDest}" />
+		</war>
+		<delete dir="${dist}/${warDest}">
+		</delete>
+		<delete dir="${dist}/${classDest}">
+		</delete>
+	</target>
+
+	<target name="upload" depends="war">
+
+		<ftp action="del" server="175.41.24.50" userid="vh201338" password="48686094" remotedir="webapps">
+			<fileset>
+				<include name="blog.war" />
+			</fileset>
+		</ftp>
+
+		<!--
+		<ftp action="rmdir" server="175.41.24.50" userid="vh201338" password="48686094" remotedir="webapps">
+			<fileset>
+				<include name="blog" />
+				<include name="blog/**" />
+			</fileset>
+		</ftp>
+		-->
+		<ftp server="175.41.24.50" userid="vh201338" password="48686094" remotedir="webapps">
+			<fileset dir="build/dist">
+				<include name="blog.war" />
+			</fileset>
+		</ftp>
+		<!--
+		<delete dir="${dist}" />
+		-->
+	</target>
+
+
+</project>
