@@ -23,7 +23,10 @@
 
 	<!-- scans the classpath for annotated components (including @Repostory 
 		and @Service that will be auto-registered as Spring beans -->
-	<context:component-scan base-package="com.lichhao.blog" />
+	<context:component-scan base-package="com.lichhao.blog">
+		<context:include-filter type="regex"
+			expression="com\.lichhao\.blog\.[action|dao|service|model]" />
+	</context:component-scan>
 
 	<!-- This will ensure that hibernate or jpa exceptions are automatically 
 		translated into Spring's generic DataAccessException hierarchy for those 

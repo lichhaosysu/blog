@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -17,6 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
  * 
  */
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "person")
 @NamedQuery(name = "person.findByEmplid", query = "from Person where emplid = :emplid")
 public class Person implements Serializable {
