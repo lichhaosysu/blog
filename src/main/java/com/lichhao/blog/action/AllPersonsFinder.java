@@ -26,6 +26,7 @@ public class AllPersonsFinder extends ActionSupport {
 	/**
 	 * Collection of all persons.
 	 */
+	
 	private List<Person> persons;
 
 	/**
