@@ -1,0 +1,21 @@
+#contentContainer {
+	background-color: white;
+	padding: 1.5em;
+	margin-top: 1.5em;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	/*x轴偏移、y轴偏移、模糊值、颜色*/
+	-webkit-box-shadow: 1px 1px 10px #ccc, -1px -1px 10px #ccc;
+	-moz-box-shadow: 1px 1px 10px #ccc, -1px -1px 10px #ccc;
+	box-shadow: 1px 1px 10px #ccc, -1px -1px 10px #ccc;
+	text-shadow: 0 1px 0 #fff;
+	-moz-border-radius: 4px;
+}
+
+#header {
+	background-color: #006DAE;
+	width: auto;
+	height: 80px;
+	margin-top: 0px;
+}
