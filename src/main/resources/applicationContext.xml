@@ -25,7 +25,11 @@
 		and @Service that will be auto-registered as Spring beans -->
 	<context:component-scan base-package="com.lichhao.blog">
 		<context:include-filter type="regex"
-			expression="com\.lichhao\.blog\.[action|dao|service|model]" />
+			expression="com\.lichhao\.blog\.action.*" />
+		<context:include-filter type="regex"
+			expression="com\.lichhao\.blog\.service.*" />
+		<context:include-filter type="regex"
+			expression="com\.lichhao\.blog\.dao.*" />
 	</context:component-scan>
 
 	<!-- This will ensure that hibernate or jpa exceptions are automatically 
@@ -40,6 +44,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
 		<property name="persistenceUnitName" value="blogPersistenceUnit" />
+		<!-- TODO：启用这个属性会冲突报错，具体原因有待查证 -->
 		<!--<property name="packagesToScan" value="com.lichhao.blog.model" /> -->
 		<property name="jpaDialect">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
