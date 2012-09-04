@@ -35,7 +35,7 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
 
 	<!-- 设置是否通过JAR文件提供静态内容服务，该属性的默认值为true -->
-	<constant name="struts.serve.static" value="false" />
+	<constant name="struts.serve.static" value="true" />
 
 	<!-- 设置浏览器是否缓存静态内容，当应用处于开发阶段时，若希望每次请求都获得服务器的最新响应，则可设置该属性为false -->
 	<constant name="struts.serve.static.browserCache" value="false" />
