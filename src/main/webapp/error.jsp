@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,7 +12,7 @@
 
 <p>The application encountered a problem and your request was not completed successfully.</p>
 
-<p><a href="index.jsp">Return Home</a>
+<p><a href="jsp/index.jsp">Return Home</a>
 
 </body>
 </html>

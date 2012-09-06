@@ -77,7 +77,7 @@
 		</delete>
 	</target>
 
-	<target name="upload" depends="war">
+	<target name="upload">
 
 		<ftp action="del" server="175.41.24.50" userid="vh201338" password="48686094" remotedir="webapps">
 			<fileset>

@@ -21,6 +21,7 @@
 		<slf4j.version>1.6.4</slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
 		<fastjson.version>1.1.23</fastjson.version>
+		<cglib.version>2.2.2</cglib.version>
 	</properties>
 
 	<!-- some useful repositories -->
@@ -161,7 +162,7 @@
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		
+
 		<!-- logging dependency -->
 		<dependency>
 			<groupId>log4j</groupId>
@@ -206,11 +207,18 @@
 			<version>${mysql.version}</version>
 		</dependency>
 
-		<!-- fastjson from alibaba-->
+		<!-- fastjson from alibaba -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
+		</dependency>
+		
+		<!-- cglib -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>${cglib.version}</version>
 		</dependency>
 
 	</dependencies>

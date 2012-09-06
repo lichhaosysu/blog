@@ -40,7 +40,7 @@
 	<!-- 设置浏览器是否缓存静态内容，当应用处于开发阶段时，若希望每次请求都获得服务器的最新响应，则可设置该属性为false -->
 	<constant name="struts.serve.static.browserCache" value="false" />
 
-	<package name="springjpaexample" extends="struts-default">
+	<package name="article" extends="struts-default">
 
 		<interceptors>
 			<interceptor-stack name="appDefaultStack">
@@ -63,31 +63,20 @@
 				result="error" />
 		</global-exception-mappings>
 
-		<action name="personFinder" class="personFinder" method="execute">
-			<result name="success">/personinfo.jsp</result>
+		<action name="saveArticle" class="articleAction" method="execute">
+			<result name="success">/jsp/article/success.jsp</result>
 		</action>
-
-		<action name="allPersonsFinder" class="allPersonsFinder"
-			method="execute">
-			<result name="success">/personsinfo.jsp</result>
+		
+		<action name="listArticles" class="articleAction" method="listArticles">
+			<result name="listArticles">/jsp/article/listArticles.jsp</result>
 		</action>
-
-		<action name="*PersonUpdate" class="personUpdater" method="{1}">
-			<result name="input">/inputpersonupdate.jsp</result>
-			<result name="success">/personupdated.jsp</result>
-		</action>
-
-		<action name="personDelete" class="personDeleter" method="execute">
-			<result name="success">/persondeleted.jsp</result>
-		</action>
-
-		<action name="*PersonSave" class="personSaver" method="{1}">
-			<result name="input">/inputpersonsave.jsp</result>
-			<result name="success">/personsaved.jsp</result>
+		
+		<action name="viewArticle" class="articleAction" method="viewArticle">
+			<result name="viewArticle">/jsp/article/success.jsp</result>
 		</action>
 
 	</package>
-
+	
 
 
 </struts>

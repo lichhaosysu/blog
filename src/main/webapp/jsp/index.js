@@ -1,6 +1,3 @@
-var editor = new baidu.editor.ui.Editor();
-editor.render("myEditor");
-
 /**
  * 返回顶端
  */
@@ -9,6 +6,7 @@ function ToTop(btnId) {
 	this.btn = document.getElementById(btnId);
 	this.init();
 }
+
 ToTop.prototype = {
 	init : function() {
 		var _this = this, version = 0;
@@ -41,11 +39,28 @@ ToTop.prototype = {
 	}
 };
 
-window.onload = function(){
-	new ToTop("J_2Top");
-};
-
 $(function() {
-	// alert('hello world!');
-});
 
+	var options = {
+		toolbars : [ [ 'fullscreen', 'source', '|', 'undo', 'redo', '|',
+				'fontfamily', 'fontsize', '|', 'bold', 'italic', 'underline',
+				'strikethrough', '|', 'pasteplain', '|', 'forecolor',
+				'backcolor', '|', 'link', 'unlink', '|', 'insertimage',
+				'emotion', 'scrawl', 'attachment', 'highlightcode', 'template',
+				'background', '|', 'spechars', 'wordimage', '|', 'preview',
+				'searchreplace', 'help' ] ],
+		topOffset : 41,
+		elementPathEnabled : false,
+		autoClearinitialContent : true
+	};
+
+	var editor = new baidu.editor.ui.Editor(options);
+
+	editor.render("myEditor");
+	new ToTop("J_2Top");
+
+//	$('#publish').click(function() {
+//		$('#mainForm').submit();
+//	});
+
+});
