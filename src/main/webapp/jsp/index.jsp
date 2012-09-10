@@ -46,6 +46,7 @@ body {
 				<div class="span10 offset1 content">
 					<form class="form-horizontal" id="mainForm"
 						action="<%=contextPath%>/saveArticle.action" method="post">
+						<input type="hidden" name="article.articleId" value="${article.articleId}" />
 						<fieldset>
 							<div style="border-bottom: 1px solid #666; padding-bottom: 1em;">
 								<font style="font-weight: bold; font-size: 1.5em;">发表博文</font>
@@ -64,12 +65,12 @@ body {
 								标题（必填）：
 							</p>
 							<input class="input-xxlarge focused" type="text"
-								name="article.title" placeholder="这里填入你文章的标题..." />
+								name="article.title" placeholder="这里填入你文章的标题..." value="${article.title}"/>
 
 							<p>
 								内容（必填）：
 							</p>
-							<script type="text/plain" id="myEditor" name="article.content"></script>
+							<script type="text/plain" id="myEditor" name="article.content">${article.content}</script>
 						</fieldset>
 					</form>
 					<div id="J_2Top" class="back2Top"></div>

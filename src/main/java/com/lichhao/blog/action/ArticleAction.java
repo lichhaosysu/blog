@@ -21,9 +21,19 @@ public class ArticleAction extends ActionSupport {
 
 	private List<Article> articles;
 
+	
+	public String index() throws Exception{
+		return SUCCESS;
+	}
+	
 	@Override
 	public String execute() throws Exception {
-		articleDao.save(article);
+		
+		if(article.getArticleId() != null){
+			articleDao.update(article);
+		}else{
+			articleDao.save(article);
+		}
 		return SUCCESS;
 	}
 
@@ -37,6 +47,17 @@ public class ArticleAction extends ActionSupport {
 	public String viewArticle() throws Exception {
 		article = articleDao.findArticleById(article.getArticleId());
 		return "viewArticle";
+	}
+	
+	public String editArticle() throws Exception{
+		article = articleDao.findArticleById(article.getArticleId());
+		return "editArticle";
+	}
+	
+	public String deleteArticle() throws Exception{
+		article = articleDao.findArticleById(article.getArticleId());
+		articleDao.delete(article);
+		return "deleteArticle";
 	}
 
 	public Article getArticle() {

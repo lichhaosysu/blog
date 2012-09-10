@@ -51,7 +51,8 @@ $(function() {
 				'searchreplace', 'help' ] ],
 		topOffset : 41,
 		elementPathEnabled : false,
-		autoClearinitialContent : true
+		autoClearinitialContent : false,
+		initialContent:''
 	};
 
 	var editor = new baidu.editor.ui.Editor(options);

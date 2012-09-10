@@ -21,6 +21,17 @@ public class ArticleDao {
 		entityManager.persist(article);
 	}
 
+	@Transactional
+	public void update(Article article) {
+		entityManager.merge(article);
+	}
+
+	@Transactional
+	public void delete(Article article) {
+		article = entityManager.merge(article);
+		entityManager.remove(article);
+	}
+
 	public List<Article> findAllArticles() {
 		TypedQuery<Article> query = entityManager.createQuery("from Article",
 				Article.class);

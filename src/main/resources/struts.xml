@@ -40,7 +40,7 @@
 	<!-- 设置浏览器是否缓存静态内容，当应用处于开发阶段时，若希望每次请求都获得服务器的最新响应，则可设置该属性为false -->
 	<constant name="struts.serve.static.browserCache" value="false" />
 
-	<package name="article" extends="struts-default">
+	<package name="article" namespace="/" extends="struts-default">
 
 		<interceptors>
 			<interceptor-stack name="appDefaultStack">
@@ -52,6 +52,8 @@
 		</interceptors>
 
 		<default-interceptor-ref name="appDefaultStack" />
+		
+		<default-action-ref name="index" />
 
 		<global-results>
 			<result name="error">/error.jsp</result>
@@ -62,21 +64,40 @@
 			<exception-mapping exception="java.lang.Exception"
 				result="error" />
 		</global-exception-mappings>
-
-		<action name="saveArticle" class="articleAction" method="execute">
-			<result name="success">/jsp/article/success.jsp</result>
+		
+		<action name="index" class="articleAction" method="index">
+			<result name="success" type="redirectAction">
+				<param name="actionName">listArticles</param>
+				<param name="namespace">/</param>
+			</result>
 		</action>
 		
+		<action name="saveArticle" class="articleAction" method="execute">
+			<result name="success" type="redirectAction">
+				<param name="actionName">viewArticle</param>
+				<param name="namespace">/</param>
+				<param name="article.articleId">${article.articleId}</param>
+			</result>
+		</action>
+
 		<action name="listArticles" class="articleAction" method="listArticles">
 			<result name="listArticles">/jsp/article/listArticles.jsp</result>
 		</action>
-		
+
 		<action name="viewArticle" class="articleAction" method="viewArticle">
 			<result name="viewArticle">/jsp/article/success.jsp</result>
 		</action>
 
+		<action name="editArticle" class="articleAction" method="editArticle">
+			<result name="editArticle">/jsp/index.jsp</result>
+		</action>
+
+		<action name="deleteArticle" class="articleAction" method="deleteArticle">
+			<result name="deleteArticle" type="redirectAction">
+				<param name="actionName">listArticles</param>
+				<param name="namespace">/</param>
+			</result>
+		</action>
+
 	</package>
-	
-
-
 </struts>

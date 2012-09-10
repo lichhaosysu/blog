@@ -55,12 +55,18 @@ body {
 					<div style="padding: 0em 1.5em 1.5em 1.5em;">
 
 
-					<c:forEach items="${articles}" var="article">
-						<p>
-							<a
-								href="<%=contextPath%>/viewArticle.action?article.articleId=${article.articleId}">${article.title}</a>
-						</p>
-					</c:forEach>
+						<c:forEach items="${articles}" var="article">
+							<p>
+								<a
+									href="<%=contextPath%>/viewArticle.action?article.articleId=${article.articleId}">${article.title}</a>
+								<a 
+									href="<%=contextPath%>/editArticle.action?article.articleId=${article.articleId}"><font color="black">修改</font>
+								</a>
+								<a
+									href="<%=contextPath%>/deleteArticle.action?article.articleId=${article.articleId}"><font color="black">删除</font>
+								</a>
+							</p>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
