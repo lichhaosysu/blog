@@ -20,22 +20,27 @@ body {
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#">我的文章</a>
-					<div class="nav-collapse">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse"
+						data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="./index.html">我的小窝</a>
+					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<li class="active">
-								<a href="#">日志</a>
+								<a href="#">博文目录</a>
 							</li>
 							<li class="">
 								<a href="#">草稿箱</a>
 							</li>
 							<li class="">
 								<a href="#">留言板</a>
-							</li>
-							<li class="divider-vertical"></li>
+							</li>							
 							<li class="">
 								<a href="#">关于我</a>
-							</li>
+							</li>							
 						</ul>
 					</div>
 				</div>
@@ -46,7 +51,8 @@ body {
 				<div class="span10 offset1 content">
 					<form class="form-horizontal" id="mainForm"
 						action="<%=contextPath%>/saveArticle.action" method="post">
-						<input type="hidden" name="article.articleId" value="${article.articleId}" />
+						<input type="hidden" name="article.articleId"
+							value="${article.articleId}" />
 						<fieldset>
 							<div style="border-bottom: 1px solid #666; padding-bottom: 1em;">
 								<font style="font-weight: bold; font-size: 1.5em;">发表博文</font>
@@ -65,7 +71,8 @@ body {
 								标题（必填）：
 							</p>
 							<input class="input-xxlarge focused" type="text"
-								name="article.title" placeholder="这里填入你文章的标题..." value="${article.title}"/>
+								name="article.title" placeholder="这里填入你文章的标题..."
+								value="${article.title}" />
 
 							<p>
 								内容（必填）：

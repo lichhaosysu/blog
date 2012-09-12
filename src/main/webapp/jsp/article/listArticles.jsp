@@ -20,22 +20,27 @@ body {
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#">我的文章</a>
-					<div class="nav-collapse">
+					<button type="button" class="btn btn-navbar" data-toggle="collapse"
+						data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="brand" href="./index.html">我的小窝</a>
+					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<li class="active">
-								<a href="#">日志</a>
+								<a href="#">博文目录</a>
 							</li>
 							<li class="">
 								<a href="#">草稿箱</a>
 							</li>
 							<li class="">
 								<a href="#">留言板</a>
-							</li>
-							<li class="divider-vertical"></li>
+							</li>							
 							<li class="">
 								<a href="#">关于我</a>
-							</li>
+							</li>							
 						</ul>
 					</div>
 				</div>
