@@ -8,11 +8,6 @@
 		<%@ include file="/jsp/includes/bootstrap-css.inc"%>
 		<%@ include file="/jsp/includes/ueditor-css.inc"%>
 		<link rel="stylesheet" href="<%=contextPath%>/css/index.css">
-		<style type="text/css">
-body {
-	background-color: #005094;
-}
-</style>
 		<link href="<%=contextPath%>/img/favicon.png" rel="shortcut icon" />
 		<title>Let's Blog!</title>
 	</head>

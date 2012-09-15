@@ -1,3 +1,11 @@
+
+body{
+	background: #C6E5F2 url(../img/spriteme2.png) no-repeat center top;
+	background-position: -79px -10px;
+	padding: 0px;
+	color: #35383D;
+}
+
 .content {
 	background-color: white;
 	margin-top: 88px;
@@ -6,9 +14,9 @@
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
 	/*x轴偏移、y轴偏移、模糊值、颜色*/
-	-webkit-box-shadow: 1px 1px 10px #ccc, -1px -1px 10px #ccc;
-	-moz-box-shadow: 1px 1px 10px #ccc, -1px -1px 10px #ccc;
-	box-shadow: 1px 1px 10px #ccc, -1px -1px 10px #ccc;
+	-webkit-box-shadow: 1px 1px 5px #ccc, -1px -1px 5px #ccc;
+	-moz-box-shadow: 1px 1px 5px #ccc, -1px -1px 5px #ccc;
+	box-shadow: 1px 1px 5px #ccc, -1px -1px 5px #ccc;
 	text-shadow: 0 1px 0 #fff;
 	-moz-border-radius: 4px;
 	-moz-border-radius: 4px;
