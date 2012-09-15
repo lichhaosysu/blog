@@ -1,0 +1,55 @@
+
+body{
+	background: #C6E5F2 url(../img/spriteme2.png) no-repeat center top;
+	background-position: -79px -10px;
+	padding: 0px;
+	color: #35383D;
+}
+
+.content {
+	background-color: white;
+	margin-top: 88px;
+	margin-bottom: 48px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	/*x轴偏移、y轴偏移、模糊值、颜色*/
+	-webkit-box-shadow: 1px 1px 5px #ccc, -1px -1px 5px #ccc;
+	-moz-box-shadow: 1px 1px 5px #ccc, -1px -1px 5px #ccc;
+	box-shadow: 1px 1px 5px #ccc, -1px -1px 5px #ccc;
+	text-shadow: 0 1px 0 #fff;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+.content button {
+	padding-right: 1.5em;
+}
+
+.content form {
+	padding: 1.5em;
+}
+
+.content form p {
+	margin: 0.75em 0;
+}
+
+#header {
+	background-color: #006DAE;
+	width: auto;
+	height: 80px;
+	margin-top: 0px;
+}
+
+.back2Top {
+	display: none;
+	position: fixed;
+	bottom: 100px;
+	right: 70px;
+	width: 50px;
+	height: 50px;
+	background: url('../img/top.png') #DDE1E5;
+	box-shadow: 2px 2px 5px #d3d6da;
+	cursor: pointer;
+}
