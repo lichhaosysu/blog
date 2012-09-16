@@ -8,7 +8,6 @@
 	<title>八度空间</title>
 </head>
 <body>
-	<#-->
  	<div class="top">
 		<div id="navigation">
 			<a href="http://localhost:8080/b3log" class="home">首页</a>
@@ -16,7 +15,6 @@
 			<a href="http://localhost:8080/b3log/blog-articles-feed.do" class="classifiche">Atom</a>
 		</div>
 	</div>
-	<-->
 	<div class="wrapper">
 	<div class="content">
 		<div class="header">

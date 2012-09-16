@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="blog"
+  name="blog-struts2"
   id="myeclipse.1346293034977"
-  context-root="/blog"
+  context-root="/blog-struts2"
   j2ee-spec="5.0"
-  archive="blog.war">
+  archive="blog-struts2.war">
   <attributes>
     <attribute name="webrootdir" value="src/main/webapp" />
   </attributes>
