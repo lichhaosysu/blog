@@ -23,7 +23,7 @@
 	<constant name="struts.locale" value="zh_CN" />
 
 	<!-- 设置Web应用程序的默认编码集。对于获取中文请求参数值 -->
-	<constant name="struts.i18n.encoding" value="utf8" />
+	<constant name="struts.i18n.encoding" value="utf-8" />
 
 	<!-- 设置struts 2文件上传中整个请求内容允许的最大字节数 -->
 	<constant name="struts.multipart.maxSize" value="1000000000" />
@@ -56,6 +56,17 @@
 
 	<package name="basePackage" extends="struts-default">
 
+		<interceptors>
+			<interceptor-stack name="appDefault">
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">ERROR</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="appDefault" />
+
 		<global-results>
 			<result name="error">/error.jsp</result>
 		</global-results>
@@ -64,6 +75,6 @@
 			<exception-mapping exception="java.lang.Exception"
 				result="error" />
 		</global-exception-mappings>
-		
+
 	</package>
 </struts>

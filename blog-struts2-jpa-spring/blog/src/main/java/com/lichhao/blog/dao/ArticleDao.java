@@ -1,5 +1,6 @@
 package com.lichhao.blog.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,6 +14,7 @@ import com.lichhao.blog.model.Article;
 
 @Repository("articleDao")
 public class ArticleDao {
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -39,15 +41,12 @@ public class ArticleDao {
 		return articles;
 	}
 
-	public Article findArticleById(Integer articleId) {
+	public Article findArticleById(String articleId) {
 		TypedQuery<Article> query = entityManager.createQuery(
 				"from Article where articleId = :articleId", Article.class);
 		query.setParameter("articleId", articleId);
-
 		Article article = query.getSingleResult();
-
 		return article;
-
 	}
 
 }

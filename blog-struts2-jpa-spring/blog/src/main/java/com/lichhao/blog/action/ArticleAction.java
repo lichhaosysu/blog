@@ -1,7 +1,9 @@
 package com.lichhao.blog.action;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -10,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lichhao.blog.dao.ArticleDao;
 import com.lichhao.blog.model.Article;
-import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage("basePackage")
 @Namespace("/")
-public class ArticleAction extends ActionSupport {
+public class ArticleAction extends BaseAction {
 
 	@Autowired
 	private ArticleDao articleDao;
@@ -23,25 +24,32 @@ public class ArticleAction extends ActionSupport {
 
 	private List<Article> articles;
 
-	@Action(value = "index", results = { @Result(name = "index", type="freemarker", location = "/WEB-INF/ftl/index.ftl") })
-	public String index() throws Exception {
-		return "index";
+	@Action(value = "admin", results = { @Result(name = "admin", type = "freemarker", location = "/WEB-INF/ftl/admin.ftl") })
+	public String admin() throws Exception {
+		
+		String contextPath = request.getContextPath();
+		request.setAttribute("contextPath", contextPath);
+		
+		return "admin";
 	}
-	
-	@Action(value = "index2", results = { @Result(name = "viewArticle", type="freemarker", location = "/WEB-INF/ftl/viewArticle.ftl") })
+
+	@Action(value = "index2", results = { @Result(name = "viewArticle", type = "freemarker", location = "/WEB-INF/ftl/viewArticle.ftl") })
 	public String index2() throws Exception {
 		return "viewArticle";
 	}
-	
 
 	@Action(value = "saveArticle", results = { @Result(type = "redirectAction", name = "saveArticle", params = {
-			"actionName", "viewArticle", "article.articleId",
-			"${article.articleId}" }) })
+			"actionName", "viewArticle?article.articleId=${article.articleId}" }) })
 	public String saveArticle() throws Exception {
-
-		if (article.getArticleId() != null) {
+		if (!StringUtils.isEmpty(article.getArticleId())) {
+			Date date = new Date();
+			article.setModifyDate(date);
 			articleDao.update(article);
 		} else {
+			Date date = new Date();
+			article.setCreateDate(date);
+			article.setModifyDate(date);
+			article.setVisitCount(0);
 			articleDao.save(article);
 		}
 		return "saveArticle";

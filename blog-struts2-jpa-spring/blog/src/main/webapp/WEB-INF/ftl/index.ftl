@@ -2,9 +2,9 @@
 <html lang="zh">
 <head>
 	<meta charset="utf8">
-	<link rel="stylesheet" href="index.css">
-	<script src="jquery-1.7.2.js"></script>
-	<script src="index.js"></script>
+	<link rel="stylesheet" href="css/article/index.css">
+	<script src="js/jquery/jquery-1.7.2.js"></script>
+	<script src="js/article/index.js"></script>
 	<title>八度空间</title>
 </head>
 <body>
