@@ -34,6 +34,8 @@ public class BaseAction extends ActionSupport implements ServletRequestAware,
 
 	@Override
 	public void setServletRequest(HttpServletRequest request) {
+		String contextPath = request.getContextPath();
+		request.setAttribute("contextPath", contextPath);
 		this.request = request;
 	}
 

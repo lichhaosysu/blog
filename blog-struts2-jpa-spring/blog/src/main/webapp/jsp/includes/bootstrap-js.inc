@@ -1,1 +1,0 @@
-		<script src="<%=contextPath%>/js/bootstrap/js/bootstrap.js"></script>

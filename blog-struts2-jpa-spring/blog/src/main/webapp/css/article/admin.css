@@ -39,7 +39,6 @@ body {
 #navbar-content-title {
 	padding-right: 24px;
 	color: #53637D;
-	cursor: pointer;
 	font-size: 200%;
 	font-weight: normal;
 	margin: 0;
@@ -123,3 +122,19 @@ div.page{
 li {
 	line-height: normal;
 }
+
+button.selected {
+	color: #D54121;
+	background: url(../../img/completed.png) no-repeat center bottom;
+}
+button.selected:hover{
+	color: #333;
+	text-decoration: none;
+	background-color: #E6E6E6;
+	background-position: center bottom;
+	-webkit-transition: background-position 0.1s linear;
+	-moz-transition: background-position 0.1s linear;
+	-o-transition: background-position 0.1s linear;
+	transition: background-position 0.1s linear;
+}
+

@@ -4,17 +4,23 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lichhao.blog.model.Article;
+import com.lichhao.blog.model.Tag;
 
 @Repository("articleDao")
 public class ArticleDao {
-	
+
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -45,8 +51,37 @@ public class ArticleDao {
 		TypedQuery<Article> query = entityManager.createQuery(
 				"from Article where articleId = :articleId", Article.class);
 		query.setParameter("articleId", articleId);
-		Article article = query.getSingleResult();
+		Article article = null;
+		try {
+			article = query.getSingleResult();
+		} catch (NoResultException e) {
+		}
 		return article;
+	}
+
+	public List<Tag> findAllTags() {
+		TypedQuery<Tag> query = entityManager
+				.createQuery("from Tag", Tag.class);
+		List<Tag> tags = query.getResultList();
+		return tags;
+	}
+
+	public Tag findTagByTagName(String tagName) {
+		TypedQuery<Tag> query = entityManager.createQuery(
+				"from Tag where tagName = :tagName", Tag.class);
+		query.setParameter("tagName", tagName);
+		Tag tag = null;
+		try {
+			tag = query.getSingleResult();
+
+		} catch (NoResultException e) {
+		}
+		return tag;
+	}
+
+	@Transactional
+	public void saveTag(Tag tag) {
+		entityManager.persist(tag);
 	}
 
 }

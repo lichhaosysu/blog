@@ -17,52 +17,109 @@
 	<title>八度空间-后台管理</title>
 </head>
 <body>
-	<div class="header"></div>
+
 	<div id="main-content">
+	
 		<div id="navbar-container">
 			<h1 id="navbar-content-title">后台管理</h1>
 			<ul>
-     			<li class="navbar-item navbar-item-selected">发表文章</li>
-     			<li class="navbar-item">文章管理</li>
-     			<li class="navbar-item">评论管理</li>
-     			<li class="navbar-item">更多设置</li>
+     			<li title="#publishArticle" class="navbar-item navbar-item-selected">发表文章</li>
+     			<li title="#adminArticle" class="navbar-item">文章管理</li>
      		</ul>
 		</div>
+		
 		<div id="mainview-content">
 			<div id="page-container">
 				<div id="publishArticle" class="page">
 					<h1>发表文章</h1>
 					<form id="publishForm" action="saveArticle.action" method="post">			
 						<div class="form">
+							<input type="hidden" name="article.articleId"
+							value="${(article.articleId)!}" />
+							<input type="hidden" name="article.isPublished" value="false">
+							<input type="hidden" name="article.visitCount" value="${(article.visitCount)!}">
+							<input type="hidden" name="article.createDate" value="${(article.createDate)!}">
 							<div>
 						        <label>标题（不能为空）：</label>
-						        <input type="text" name="article.title">
+						        <input type="text" name="article.title" value="${(article.title)!}">
 						    </div>
 						    <div>
 						    	<label>正文：</label>
-						    	<script type="text/plain" id="myEditor" name="article.content"></script>
+						    	<script type="text/plain" id="myEditor" name="article.content">${(article.content)!}</script>
 							</div>
 						    <div>
-						    	<label>标签（用分号分隔多个标签）：</label>
-						    	<input type="text" name="tag">
-						    	<span style="float:right;width:10%"><button type="button" style="float:right;" class="btn btn-info">选择标签</button></span>
+						    	<label>标签（用逗号分隔多个标签）：</label>
+						    	<#assign tagStr = "">
+						    	<#if article??>
+							    	<#list article.tags as tag>
+							    		<#assign tagStr = tagStr + tag.tagName>
+							    		<#if tag_has_next>
+							    			<#assign tagStr = tagStr + ",">
+							    		</#if>
+							    	</#list>
+						    	</#if>
+						    	<input id="tagInput" readonly="true" type="text" name="tag" value="${tagStr}"> 
+						    	<button id="selectTag" type="button" style="float:right;" class="btn btn-danger">输入标签</button>
 							</div>							
+							<div id="tags">
+								<#list tags as tag>
+									<button type="button" class="btn">${tag.tagName}</button>
+								</#list>
+							</div>
 							<div>
-					        	<button type="submit" id="publish" class="btn btn-primary">
+					        	<button type="submit" id="doPublish" class="btn btn-primary" data-loading-text="正在提交...">
 									<i class="icon-envelope icon-white"></i> 立即发表
 								</button>
-								<button type="button" class="btn btn-success disabled">
+								<button type="submit" id="saveDraft" class="btn btn-success" data-loading-text="正在保存...">
 									<i class="icon-file icon-white"></i> 存为草稿
 								</button>
 						    </div>
 						</div>
 					</form>
 				</div>
+				
+				<div id="adminArticle" class="page" style="display:none;">
+					<div style="padding-top:13px;">
+						<table class="table table-striped table-bordered table-condensed">
+						    <thead>
+					          <tr>
+					            <th>#</th>
+					            <th>文章标题</th>
+					            <th>浏览次数</th>
+					            <th>发表日期</th>
+					            <th>最后修改日期</th>
+					            <th>是否已发布</th>
+					            <th>操作</th>
+					          </tr>
+					        </thead>
+					        <tbody>
+					        <#if articles?size != 0>
+						       	<#list articles as article>
+						        	<tr>
+						        		<td>${article_index+1}</td>
+						        		<td><a href="viewArticle.action?article.articleId=${article.articleId}">${article.title}</a></td>
+						        		<td>${article.visitCount}</td>
+						        		<td>${article.createDate}</td>
+						        		<td>${article.modifyDate}</td>
+						        		<td>${article.isPublished?string("是","否")}</td>
+						        		<td>
+						        		 	<a href="admin.action?article.articleId=${article.articleId}" style="margin-right:5px;">修改</a>
+						        		 	<a href="deleteArticle.action?article.articleId=${article.articleId}" >删除</a>
+						        		</td>
+						        	</tr>
+						        </#list>
+						        <#else>
+						        	<tr>
+										<td colspan="7">还没有写任何文章</td>
+						        	</tr>
+					        </#if>
+					        
+					        </tbody>
+				      	</table>
+			      	</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-	
-	
 </body>
 </html>
