@@ -56,11 +56,11 @@
 		<copy todir="${dist}/${classDest}">
 			<fileset dir="build/file-to-replace" includes="jdbc.properties" />
 		</copy>
-
+		<!--
 		<copy todir="${dist}/${warDest}/WEB-INF">
 			<fileset dir="build/jstl-tlds" includes="*.tld" />
 		</copy>
-
+		-->
 	</target>
 
 	<!--打包-->
@@ -68,7 +68,9 @@
 		<war destfile="${dist}/${warName}">
 			<fileset dir="${dist}/${warDest}" />
 			<lib dir="build/web-libs" />
+			<!--
 			<lib dir="build/servlet-libs" includes="jstl-1.2.jar" />
+			-->
 			<classes dir="${dist}/${classDest}" />
 		</war>
 		<delete dir="${dist}/${warDest}">

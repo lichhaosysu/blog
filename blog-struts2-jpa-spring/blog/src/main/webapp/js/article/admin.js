@@ -1,5 +1,10 @@
 $(function() {
 
+	$('#myModal').modal({
+		backdrop : 'static',
+		show : false
+	});
+
 	$('#navbar-container>ul>li').mousedown(function() {
 		$(this).addClass('navbar-item-focus');
 	}).mouseup(function() {
@@ -26,18 +31,24 @@ $(function() {
 		var $title = $('input[name="article.title"]');
 		if ($.trim($title.val()) == '') {
 			$title.val('');
-			alert('标题不能为空！');
-			if ($.browser.safari) {
-				$(document.body).animate({
-					'scrollTop' : 0
-				}, 'slow');
-			} else {
-				$(document.documentElement).animate({
-					'scrollTop' : 0
-				}, 'slow');
-			}
-			$title.focus();
+
+			$('#myModal').modal('show');
+
+			$('#myModal').on('hidden', function() {
+				if ($.browser.safari) {
+					$(document.body).animate({
+						'scrollTop' : 0
+					}, 'slow');
+				} else {
+					$(document.documentElement).animate({
+						'scrollTop' : 0
+					}, 'slow');
+				}
+				$title.focus();
+			});
+
 			return false;
+
 		} else {
 
 			if ($('input[name="article.isPublished"]').val() == 'true') {
@@ -91,6 +102,12 @@ $(function() {
 		}
 	});
 
+	// $('input[name="article.title"]').focus();
+
+});
+
+$(function() {
+
 	var options = {
 		toolbars : [ [ 'fullscreen', 'source', '|', 'undo', 'redo', '|',
 				'fontfamily', 'fontsize', '|', 'bold', 'italic', 'underline',
@@ -102,11 +119,10 @@ $(function() {
 		initialContent : '',
 		autoHeightEnabled : false
 	};
-
 	var editor = new baidu.editor.ui.Editor(options);
+	editor.render("contentEditor");
 
-	editor.render("myEditor");
-
-//	$('input[name="article.title"]').focus();
-
+	var options2 = $.extend({}, options);
+	var editor2 = new baidu.editor.ui.Editor(options2);
+	editor2.render("summaryEditor");
 });

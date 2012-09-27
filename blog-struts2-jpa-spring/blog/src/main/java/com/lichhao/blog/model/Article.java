@@ -41,6 +41,9 @@ public class Article implements Serializable {
 	@Column(name = "content")
 	private String content;
 
+	@Column(name = "summary")
+	private String summary;
+
 	@Column(name = "visit_count")
 	private Integer visitCount;
 
@@ -60,18 +63,11 @@ public class Article implements Serializable {
 	@OrderBy("createDate ASC")
 	private Set<Tag> tags = new HashSet<Tag>() {
 		/*
-		public String toString() {
-			StringBuilder sb = new StringBuilder();
-			Iterator<Tag> it = iterator();
-			for (;;) {
-				sb.append(it.next().getTagName());
-				if (!it.hasNext()) {
-					return sb.toString();
-				}
-				sb.append(",");
-			}
-		};
-		*/
+		 * public String toString() { StringBuilder sb = new StringBuilder();
+		 * Iterator<Tag> it = iterator(); for (;;) {
+		 * sb.append(it.next().getTagName()); if (!it.hasNext()) { return
+		 * sb.toString(); } sb.append(","); } };
+		 */
 	};
 
 	public String getArticleId() {
@@ -96,6 +92,14 @@ public class Article implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 	public Integer getVisitCount() {

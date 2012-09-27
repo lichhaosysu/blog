@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="css/article/viewArticle.css">
+	<link rel="stylesheet" href="css/public.css">
 	<script src="js/jquery/jquery-1.7.2.js"></script>
 	<script src="js/article/viewArticle.js"></script>
 	<title>八度空间-${article.title}</title>
@@ -19,7 +19,7 @@
         <div id="fd"></div>
         <div id="blog_navbar">
           <ul>
-            <li class="blog_navbar_for"><a href="#">首页</a></li>
+            <li class="blog_navbar_for"><a href="index.action">首页</a></li>
             <li><a href="admin.action">写博文</a></li>
             <li><a href="#">标签墙</a></li>
             <li><a href="#">关于我</a></li>

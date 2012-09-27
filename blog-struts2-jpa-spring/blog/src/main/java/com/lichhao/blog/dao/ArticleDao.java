@@ -1,5 +1,6 @@
 package com.lichhao.blog.dao;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lichhao.blog.model.Article;
+import com.lichhao.blog.model.Constants;
 import com.lichhao.blog.model.Tag;
 
 @Repository("articleDao")
@@ -30,8 +32,8 @@ public class ArticleDao {
 	}
 
 	@Transactional
-	public void update(Article article) {
-		entityManager.merge(article);
+	public Article update(Article article) {
+		return entityManager.merge(article);
 	}
 
 	@Transactional
@@ -41,10 +43,26 @@ public class ArticleDao {
 	}
 
 	public List<Article> findAllArticles() {
-		TypedQuery<Article> query = entityManager.createQuery("from Article",
+		TypedQuery<Article> query = entityManager.createQuery("from Article order by createDate",
 				Article.class);
 		List<Article> articles = query.getResultList();
 		return articles;
+	}
+	
+	public List<Article> findArticlesByPage(int page){
+		
+		int articlesPerPage = Constants.ARTICLES_PER_PAGE; //每页显示15篇文章
+		TypedQuery<Article> query = entityManager.createQuery("from Article order by createDate",
+				Article.class);
+		query.setFirstResult(articlesPerPage*(page-1)).setMaxResults(articlesPerPage);
+		List<Article> articles = query.getResultList();
+		return articles;
+		
+	}
+	
+	public Integer getArticlesTotal(){
+		Query query = entityManager.createNativeQuery("select count(1) from article");
+		return ((BigInteger)(query.getResultList().get(0))).intValue();
 	}
 
 	public Article findArticleById(String articleId) {
@@ -73,7 +91,6 @@ public class ArticleDao {
 		Tag tag = null;
 		try {
 			tag = query.getSingleResult();
-
 		} catch (NoResultException e) {
 		}
 		return tag;

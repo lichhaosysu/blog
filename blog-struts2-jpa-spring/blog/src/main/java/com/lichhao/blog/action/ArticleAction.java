@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lichhao.blog.dao.ArticleDao;
 import com.lichhao.blog.model.Article;
+import com.lichhao.blog.model.Constants;
 import com.lichhao.blog.model.Tag;
 
 @ParentPackage("basePackage")
@@ -29,6 +30,10 @@ public class ArticleAction extends BaseAction {
 	private List<Tag> tags;
 
 	private String tag;
+
+	private Integer page;
+
+	private Integer total; // 文章总页数
 
 	@Action(value = "admin", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/ftl/admin.ftl") })
 	public String admin() throws Exception {
@@ -87,28 +92,35 @@ public class ArticleAction extends BaseAction {
 		return "success";
 	}
 
-	@Action(value = "listArticles", results = { @Result(name = "listArticles", location = "/jsp/article/listArticles.jsp") })
+	@Action(value = "index", results = { @Result(name = "success", location = "/WEB-INF/ftl/index.ftl") })
 	public String listArticles() throws Exception {
-		articles = articleDao.findAllArticles();
-		return "listArticles";
+
+		if (page == null) {
+			page = 1; // 默认第一页
+		}
+
+		articles = articleDao.findArticlesByPage(page);
+		Integer articlesTotal = articleDao.getArticlesTotal();
+		total = (articlesTotal + Constants.ARTICLES_PER_PAGE - 1)
+				/ Constants.ARTICLES_PER_PAGE;
+
+		// articles = articleDao.findAllArticles();
+		if(page>total){
+			throw new IllegalStateException("要访问的页数超出范围！");
+		}
+
+		return "success";
 	}
 
-//	@Action(value = "viewArticle", results = { @Result(name = "viewArticle", location = "/jsp/article/success.jsp") })
-//	public String viewArticle() throws Exception {
-//		article = articleDao.findArticleById(article.getArticleId());
-//		tags = new ArrayList<Tag>();
-//		tags.addAll(article.getTags());
-//		return "viewArticle";
-//	}
-	
 	@Action(value = "viewArticle", results = { @Result(name = "success", location = "/WEB-INF/ftl/viewArticle.ftl") })
 	public String viewArticle() throws Exception {
 		article = articleDao.findArticleById(article.getArticleId());
+		article.setVisitCount(article.getVisitCount() + 1);
+		article = articleDao.update(article);
 		tags = new ArrayList<Tag>();
 		tags.addAll(article.getTags());
 		return "success";
 	}
-	
 
 	@Action(value = "editArticle", results = { @Result(name = "editArticle", location = "/jsp/index.jsp") })
 	public String editArticle() throws Exception {
@@ -158,6 +170,22 @@ public class ArticleAction extends BaseAction {
 
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
+	}
+
+	public Integer getPage() {
+		return page;
+	}
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 
 }

@@ -6,6 +6,11 @@ body {
 	color: black;
 }
 
+ul {
+	margin: 0 0 1.5em 0;
+	padding: 0;
+}
+
 div#header,div#content,div#branding {
 	margin: 0 auto;
 	width: 950px;
@@ -84,11 +89,11 @@ div#branding h1 {
 
 a {
 	color: white;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 a:hover {
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 .blog_navbar_for a:link,.blog_navbar_for a:active,.blog_navbar_for a:visited
@@ -218,7 +223,7 @@ ul.blog_categories li {
 }
 
 img {
-	width: 100% ;
+	width: 100%;
 	border: 1px solid #CCC;
 }
 

@@ -45,7 +45,7 @@
 						    </div>
 						    <div>
 						    	<label>正文：</label>
-						    	<script type="text/plain" id="myEditor" name="article.content">${(article.content)!}</script>
+						    	<script type="text/plain" id="contentEditor" name="article.content">${(article.content)!}</script>
 							</div>
 						    <div>
 						    	<label>标签（用逗号分隔多个标签）：</label>
@@ -65,6 +65,10 @@
 								<#list tags as tag>
 									<button type="button" class="btn">${tag.tagName}</button>
 								</#list>
+							</div>
+							<div>
+						    	<label>摘要：</label>
+						    	<script type="text/plain" id="summaryEditor" name="article.summary">${(article.summary)!}</script>
 							</div>
 							<div>
 					        	<button type="submit" id="doPublish" class="btn btn-primary" data-loading-text="正在提交...">
@@ -121,5 +125,21 @@
 			</div>
 		</div>
 	</div>
+	
+	<-- Modal -->
+	<div id="myModal" class="modal hide fade in">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	    <h3>提示消息</h3>
+	  </div>
+	  <div class="modal-body">
+	    <p>标题不能为空！</p>
+	  </div>
+	  <div class="modal-footer">
+	    <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定</a>
+	  </div>
+	</div>
+	
+	
 </body>
 </html>
