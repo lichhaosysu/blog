@@ -1,7 +1,6 @@
 package com.lichhao.blog.dao;
 
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,16 +8,13 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lichhao.blog.model.Article;
-import com.lichhao.blog.model.Constants;
 import com.lichhao.blog.model.Tag;
+import com.lichhao.blog.util.Constants;
 
 @Repository("articleDao")
 public class ArticleDao {

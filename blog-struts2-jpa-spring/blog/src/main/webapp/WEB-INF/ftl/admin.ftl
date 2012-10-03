@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="js/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="css/article/admin.css">
+	<link rel="stylesheet" href="css/admin.css">
 	<link rel="stylesheet" href="js/ueditor/themes/default/ueditor.css">
 	<script src="js/jquery/jquery-1.7.2.js"></script>
 	<script>

@@ -1,9 +1,11 @@
 package com.lichhao.blog.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
@@ -69,6 +72,13 @@ public class Article implements Serializable {
 		 * sb.toString(); } sb.append(","); } };
 		 */
 	};
+
+	@OneToMany(fetch = FetchType.LAZY, targetEntity = Comment.class, cascade = {
+			CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE,
+			CascadeType.REFRESH })
+	@JoinTable(name = "comment_article", joinColumns = { @JoinColumn(name = "article_id") }, inverseJoinColumns = { @JoinColumn(name = "comment_id") })
+	@OrderBy("createDate ASC")
+	private List<Comment> comments = new ArrayList<Comment>();
 
 	public String getArticleId() {
 		return articleId;
@@ -140,6 +150,14 @@ public class Article implements Serializable {
 
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 }

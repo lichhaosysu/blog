@@ -1,5 +1,6 @@
 package com.lichhao.blog.action;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lichhao.blog.dao.ArticleDao;
 import com.lichhao.blog.model.Article;
-import com.lichhao.blog.model.Constants;
+import com.lichhao.blog.model.Comment;
+import com.lichhao.blog.util.Constants;
+import com.lichhao.blog.util.MD5Util;
 import com.lichhao.blog.model.Tag;
 
 @ParentPackage("basePackage")
@@ -34,6 +37,8 @@ public class ArticleAction extends BaseAction {
 	private Integer page;
 
 	private Integer total; // 文章总页数
+
+	private Comment comment;
 
 	@Action(value = "admin", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/ftl/admin.ftl") })
 	public String admin() throws Exception {
@@ -105,15 +110,34 @@ public class ArticleAction extends BaseAction {
 				/ Constants.ARTICLES_PER_PAGE;
 
 		// articles = articleDao.findAllArticles();
-		if(page>total){
+		if (total > 0 && page > total) {
 			throw new IllegalStateException("要访问的页数超出范围！");
 		}
 
 		return "success";
 	}
 
+	@Action(value = "commentArticle", results = { @Result(type = "redirectAction", name = "success", params = {
+			"actionName", "viewArticle?article.articleId=${article.articleId}" }) })
+	public String commentArticle() throws Exception {
+
+		article = articleDao.findArticleById(article.getArticleId());
+		comment.setCreateDate(new Date());
+		comment.setEmail(MD5Util.MD5(comment.getEmail()));
+
+		article.getComments().add(comment);
+		article = articleDao.update(article);
+
+//		request.getRequestDispatcher("viewArticle.action?article.articleId="+article.getArticleId()+"#comments").forward(request, response);
+		
+		response.sendRedirect("viewArticle.action?article.articleId="+article.getArticleId()+"#comments");
+		
+		return NONE;
+	}
+
 	@Action(value = "viewArticle", results = { @Result(name = "success", location = "/WEB-INF/ftl/viewArticle.ftl") })
 	public String viewArticle() throws Exception {
+		request.setAttribute("default_person_icon", URLEncoder.encode("http://lichhao.com/blog/img/default-person.png","utf-8"));
 		article = articleDao.findArticleById(article.getArticleId());
 		article.setVisitCount(article.getVisitCount() + 1);
 		article = articleDao.update(article);
@@ -186,6 +210,14 @@ public class ArticleAction extends BaseAction {
 
 	public void setTotal(Integer total) {
 		this.total = total;
+	}
+
+	public Comment getComment() {
+		return comment;
+	}
+
+	public void setComment(Comment comment) {
+		this.comment = comment;
 	}
 
 }

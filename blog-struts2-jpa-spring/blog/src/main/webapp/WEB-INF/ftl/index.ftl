@@ -1,5 +1,5 @@
 <#--
-底部分页栏所用到的宏
+底部分页栏所用到的宏,5页作为一个限度
 -->
 <#macro pagination page total>
 
@@ -23,6 +23,7 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/public.css">
+	<link rel="icon shortcut" href="img/logo.jpg">
 	<script src="js/jquery/jquery-1.7.2.js"></script>
 	<script src="js/article/index.js"></script>
 	<title>八度空间-倾注世间之爱于设计与创作</title>
@@ -50,7 +51,7 @@
 	
 	<div id="content" class="clearfix">
 		<div id="main">
-		
+		<#if articles?size != 0>
 			<#list articles as article>
 				<div class="blog_main">
 					<div class="posttime-blue">
@@ -79,7 +80,7 @@
 					    <ul>
 					      <li>最后编辑于：${article.modifyDate}</li>
 					      <li>浏览：${article.visitCount}</li>
-					      <li style="float:right; border:0; padding-right: 0;margin: 0"><a href="viewArticle.action?article.articleId=${article.articleId}">阅读更多》</a></li>
+					      <li style="float:right; border:0; padding-right: 0;margin: 0"><a href="viewArticle.action?article.articleId=${article.articleId}">阅读全文》</a></li>
 					    </ul>
   					</div>		
 				</div>
@@ -100,7 +101,9 @@
 					<a href="index.action?page=${page+1}">下一页 »</a> 
 					</#if>
 				</div>
-
+		<#else>
+		<span>还没有写任何博文，赶快<a href="admin.action">去写一篇</a>吧</span>
+		</#if>
 		</div>
 		<div id="local">
 			<div id="blog_owner">
