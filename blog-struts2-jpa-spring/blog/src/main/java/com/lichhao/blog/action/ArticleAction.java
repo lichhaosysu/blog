@@ -28,6 +28,10 @@ public class ArticleAction extends BaseAction {
 
 	private Article article;
 
+	private Article preArticle;
+
+	private Article nextArticle;
+
 	private List<Article> articles;
 
 	private List<Tag> tags;
@@ -109,7 +113,6 @@ public class ArticleAction extends BaseAction {
 		total = (articlesTotal + Constants.ARTICLES_PER_PAGE - 1)
 				/ Constants.ARTICLES_PER_PAGE;
 
-		// articles = articleDao.findAllArticles();
 		if (total > 0 && page > total) {
 			throw new IllegalStateException("要访问的页数超出范围！");
 		}
@@ -128,19 +131,26 @@ public class ArticleAction extends BaseAction {
 		article.getComments().add(comment);
 		article = articleDao.update(article);
 
-//		request.getRequestDispatcher("viewArticle.action?article.articleId="+article.getArticleId()+"#comments").forward(request, response);
-		
-		response.sendRedirect("viewArticle.action?article.articleId="+article.getArticleId()+"#comments");
-		
+		// request.getRequestDispatcher("viewArticle.action?article.articleId="+article.getArticleId()+"#comments").forward(request,
+		// response);
+
+		response.sendRedirect("viewArticle.action?article.articleId="
+				+ article.getArticleId() + "#comments");
+
 		return NONE;
 	}
 
 	@Action(value = "viewArticle", results = { @Result(name = "success", location = "/WEB-INF/ftl/viewArticle.ftl") })
 	public String viewArticle() throws Exception {
-		request.setAttribute("default_person_icon", URLEncoder.encode("http://lichhao.com/blog/img/default-person.png","utf-8"));
+		request.setAttribute("default_person_icon", URLEncoder.encode(
+				"http://lichhao.com/blog/img/default-person.png", "utf-8"));
 		article = articleDao.findArticleById(article.getArticleId());
 		article.setVisitCount(article.getVisitCount() + 1);
+		
 		article = articleDao.update(article);
+		preArticle = articleDao.findPreArticle(article);
+		nextArticle = articleDao.findNextArticle(article);
+		
 		tags = new ArrayList<Tag>();
 		tags.addAll(article.getTags());
 		return "success";
@@ -218,6 +228,22 @@ public class ArticleAction extends BaseAction {
 
 	public void setComment(Comment comment) {
 		this.comment = comment;
+	}
+
+	public Article getPreArticle() {
+		return preArticle;
+	}
+
+	public void setPreArticle(Article preArticle) {
+		this.preArticle = preArticle;
+	}
+
+	public Article getNextArticle() {
+		return nextArticle;
+	}
+
+	public void setNextArticle(Article nextArticle) {
+		this.nextArticle = nextArticle;
 	}
 
 }

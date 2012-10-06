@@ -125,7 +125,7 @@ li {
 
 button.selected {
 	color: #D54121;
-	background: url(../../img/completed.png) no-repeat center bottom;
+	background: url(../img/completed.png) no-repeat center bottom;
 }
 button.selected:hover{
 	color: #333;

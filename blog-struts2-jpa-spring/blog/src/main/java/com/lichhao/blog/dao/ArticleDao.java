@@ -39,7 +39,7 @@ public class ArticleDao {
 	}
 
 	public List<Article> findAllArticles() {
-		TypedQuery<Article> query = entityManager.createQuery("from Article order by createDate",
+		TypedQuery<Article> query = entityManager.createQuery("from Article order by createDate desc",
 				Article.class);
 		List<Article> articles = query.getResultList();
 		return articles;
@@ -48,7 +48,7 @@ public class ArticleDao {
 	public List<Article> findArticlesByPage(int page){
 		
 		int articlesPerPage = Constants.ARTICLES_PER_PAGE; //每页显示15篇文章
-		TypedQuery<Article> query = entityManager.createQuery("from Article order by createDate",
+		TypedQuery<Article> query = entityManager.createQuery("from Article order by createDate desc",
 				Article.class);
 		query.setFirstResult(articlesPerPage*(page-1)).setMaxResults(articlesPerPage);
 		List<Article> articles = query.getResultList();
@@ -72,6 +72,36 @@ public class ArticleDao {
 		}
 		return article;
 	}
+	
+	public Article findPreArticle(Article article) {
+		TypedQuery<Article> query = entityManager.createQuery(
+				"from Article where createDate > :createDate", Article.class);
+		query.setParameter("createDate", article.getCreateDate()).setMaxResults(1);
+		Article result = null;
+		List<Article> resultList = query.getResultList();
+		if(resultList.size() == 0){
+			return result;
+		}else{
+			result = resultList.get(0);
+			return result;
+		}
+	}
+	
+	public Article findNextArticle(Article article) {
+		TypedQuery<Article> query = entityManager.createQuery(
+				"from Article where createDate < :createDate", Article.class);
+		query.setParameter("createDate", article.getCreateDate()).setMaxResults(1);
+		Article result = null;
+		List<Article> resultList = query.getResultList();
+		if(resultList.size() == 0){
+			return result;
+		}else{
+			result = resultList.get(0);
+			return result;
+		}
+
+	}
+	
 
 	public List<Tag> findAllTags() {
 		TypedQuery<Tag> query = entityManager

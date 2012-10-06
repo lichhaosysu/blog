@@ -44,30 +44,21 @@
 				    </ul>
 				    <div class="news_tag"></div>
 				</div>		
-				<div class="blog_content">${article.content}</div>		
+				<div class="blog_content">${article.content}</div>	
+				<div class="blog_sibling">
+					<#if preArticle??>
+					<div><span>前一篇：</span><a href="viewArticle.action?article.articleId=${preArticle.articleId}">${preArticle.title}</a></div>
+					<#else>
+					<div><span>没有前一篇</span></div>
+					</#if>
+					<#if nextArticle??>
+					<div><span>后一篇：</span><a href="viewArticle.action?article.articleId=${nextArticle.articleId}">${nextArticle.title}</a></div>
+					<#else>
+					<div><span>没有后一篇</span></div>
+					</#if>
+				</div>	
 				<div class="comments" id="comments">
 					<div class="comment-body">
-						<#--
-						<div class="comment-panel">
-							<div class="left comment-author">
-								<div>
-									<img alt="相见欢" src="http://secure.gravatar.com/avatar/4543d381c252c70925caa58a2921c347?s=60&amp;d=http://localhost:8080/b3log/images/default-user-thumbnail.png">
-								</div>
-								<a href="http://lichhao.com/blog" target="_blank" title="相见欢">相见欢</a>
-							</div>
-							<div class="left comment-info">
-								<div class="left">
-									2012-09-11 23:14:19
-								</div>
-								<div class="clear">
-								</div>
-								<div class="comment-content">
-									今天终于见到传说中的b3log真面目了
-								</div>
-							</div>
-							<div class="clear"></div>
-						</div>
-						-->
 						<#if article.comments?size == 0>
 						<span>还没有任何评论</span>
 						</#if>
@@ -96,11 +87,16 @@
 						
 					</div>
 				</div>
-				<form action="commentArticle.action" method="post">
+				<form id="commentFrom" action="commentArticle.action" method="post">
 				<input type="hidden" name="article.articleId" value="${article.articleId}" />
 				<table id="commentForm" class="comment-form">
 					<tbody>
-						<tr>
+						<tr id="welcome_tr">
+							<td colspan="3">
+							<span>欢迎回来，<strong><span id="comment_name_span"></span></strong></span><a id="toggleComment" style="cursor: pointer;">隐藏》</a>
+							</td>
+						</tr>
+						<tr id="comment_name">
 							<td width="208px">
 								<input type="text" name="comment.name">
 							</td>
@@ -108,7 +104,7 @@
 								姓名
 							</td>
 						</tr>
-						<tr>
+						<tr id="comment_email">
 							<td>
 								<input type="text" name="comment.email">
 							</td>
@@ -116,7 +112,7 @@
 								邮箱
 							</td>
 						</tr>
-						<tr>
+						<tr id="comment_url">
 							<td>
 								<input type="text" name="comment.url">
 							</td>

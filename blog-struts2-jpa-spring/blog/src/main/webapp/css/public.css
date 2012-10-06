@@ -1,7 +1,7 @@
 body {
 	text-align: left;
 	font-family: Helvetica, Tahoma, Arial, sans-serif;
-	font-size: 12px;
+	font-size: 14px;
 	line-height: 1.5;
 	color: black;
 }
@@ -319,9 +319,13 @@ ul.blog_categories li {
 	background: none repeat scroll 0 0 #FCFCFC;
 	border-bottom: 1px solid #CCC;
 	border-top: 1px solid #CCC;
-	margin-bottom: 15px;
-	padding: 0 15px 15px;
+	padding: 0 0 15px;
 	position: relative;
+}
+
+.blog_sibling{
+	border-top: 1px solid #CCC;
+	padding: 15px 0;
 }
 
 .comment-body {
@@ -330,8 +334,8 @@ ul.blog_categories li {
 
 .comment-author {
 	float: left;
-	text-align: center;
-	width: 81px;
+	text-align: left;
+	width: 65px;
 }
 
 .comment-author a {
@@ -358,7 +362,7 @@ ul.blog_categories li {
 	background: url("../img/comment.gif") no-repeat scroll 0 0 #EDEFF0;
 	font-size: 12px;
 	padding: 10px 15px 0;
-	width: 555px;
+	width: 605px;
 }
 
 .comment-content {
@@ -382,7 +386,6 @@ textarea {
 	color: #555;
 	font-family: Helvetica, Arial, sans-serif;
 	height: 16px;
-	outline: none;
 	padding: 2px 1px;
 	width: 200px;
 }
@@ -390,7 +393,7 @@ textarea {
 .comment-form textarea {
 	font-size: 12px;
 	height: auto;
-	width: 640px;
+	width: 690px;
 }
 
 button,.button {
