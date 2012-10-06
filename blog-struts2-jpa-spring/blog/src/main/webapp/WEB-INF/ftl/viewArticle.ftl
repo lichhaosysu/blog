@@ -52,16 +52,34 @@
 				</div>		
 				<div class="blog_content">${article.content}</div>	
 				<div class="blog_sibling">
+					<!-- JiaThis Button BEGIN -->
+					<div class="jiathis_style_32x32">
+						<div style="float: left;"><strong>分享到：</strong></div>
+						<a class="jiathis_button_qzone"></a>
+						<a class="jiathis_button_tsina"></a>
+						<a class="jiathis_button_tqq"></a>
+						<a class="jiathis_button_renren"></a>
+						<a class="jiathis_button_kaixin001"></a>
+						<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+						<a class="jiathis_counter_style"></a>
+					</div>
+					<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1349071342748634" charset="utf-8"></script>
+					<!-- JiaThis Button END -->
+					<!-- UJian Button BEGIN -->
+						<script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js?type=slide"></script>
+					<!-- UJian Button END -->
+					<div class="clear"></div>
 					<#if preArticle??>
-					<div><span>前一篇：</span><a href="viewArticle.action?article.articleId=${preArticle.articleId}">${preArticle.title}</a></div>
+					<div style="margin-top: 15px;"><span>前一篇：</span><a href="viewArticle.action?article.articleId=${preArticle.articleId}">${preArticle.title}</a></div>
 					<#else>
-					<div><span>没有前一篇</span></div>
+					<div style="margin-top: 15px;"><span>没有前一篇</span></div>
 					</#if>
 					<#if nextArticle??>
 					<div><span>后一篇：</span><a href="viewArticle.action?article.articleId=${nextArticle.articleId}">${nextArticle.title}</a></div>
 					<#else>
 					<div><span>没有后一篇</span></div>
 					</#if>
+
 				</div>	
 				<div class="comments" id="comments">
 					<div class="comment-body">
@@ -109,7 +127,7 @@
 								<input type="text" name="comment.name">
 							</td>
 							<td colspan="2" width="400px">
-								姓名
+								姓名（必填）
 							</td>
 						</tr>
 						<tr id="comment_email">
@@ -117,7 +135,7 @@
 								<input type="text" name="comment.email">
 							</td>
 							<td colspan="2">
-								邮箱
+								邮箱（用于显示此邮箱在<a href="http://cn.gravatar.com/" target="_blank">Gravatar</a>上注册的头像，不会被保存）
 							</td>
 						</tr>
 						<tr id="comment_url">
@@ -125,7 +143,7 @@
 								<input type="text" name="comment.url">
 							</td>
 							<td colspan="2">
-								URL
+								URL（你的博客或网站链接分享）
 							</td>
 						</tr>
 						<tr>
