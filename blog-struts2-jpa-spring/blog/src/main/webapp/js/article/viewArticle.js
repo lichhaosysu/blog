@@ -39,26 +39,24 @@ var CookieUtil = {
 $(function() {
 
 	var blog_comment = CookieUtil.get("blog_comment");
-	
-	if(blog_comment){
+
+	if (blog_comment) {
 		var obj = JSON.parse(blog_comment);
 
 		$('input[name="comment.name"]').val(obj.name);
 		$('input[name="comment.email"]').val(obj.email);
 		$('input[name="comment.url"]').val(obj.url);
-		
+
 		$('#toggleComment').text('更改》');
-		$('#comment_name_span').text(obj.name+" ");
-		
+		$('#comment_name_span').text(obj.name + " ");
+
 		$('#comment_name').hide();
 		$('#comment_email').hide();
 		$('#comment_url').hide();
-	}else{
-		$('td','#welcome_tr').replaceWith($('<td colspan="3"><span>发表评论</span></td>'));
+	} else {
+		$('td', '#welcome_tr').replaceWith(
+				$('<td colspan="3"><span>发表评论</span></td>'));
 	}
-
-
-	
 
 	$('#toggleComment').click(function() {
 
@@ -75,23 +73,45 @@ $(function() {
 	});
 
 	$('#commentFrom').submit(function() {
-		
+
 		var name = $('input[name="comment.name"]').val();
 		var email = $('input[name="comment.email"]').val();
 		var url = $('input[name="comment.url"]').val();
 		
+		if(name == ''){
+			alert('请至少输入你的姓名，用于显示评论！');
+			$('input[name="comment.name"]').focus();
+			return false;
+		}
+
 		var commentObj = {};
 		commentObj.name = name;
 		commentObj.email = email;
 		commentObj.url = url;
-		
+
 		var date = new Date();
 		date.setFullYear(2099);
 
 		CookieUtil.set("blog_comment", JSON.stringify(commentObj), date);
-		
+
 		return true;
-		
+
 	});
+
+	var options = {
+		toolbars : [ [ 'fontfamily', 'fontsize', '|', 'bold', 'italic',
+				'underline', 'strikethrough', '|', 'link', '|', 'emotion',
+				'highlightcode' ] ],
+		initialContent : '',
+		autoHeightEnabled : false,
+		minFrameHeight : 320,
+		'fontsize' : [ 10, 11, 12, 14, 16, 18, 20, 24, 36 ],
+		initialStyle : 'body{font-size:14px}',
+		enterTag : 'br',
+		tabSize : 4,
+		tabNode : '&nbsp;'
+	};
+	var editor = new baidu.editor.ui.Editor(options);
+	editor.render("contentEditor");
 
 });

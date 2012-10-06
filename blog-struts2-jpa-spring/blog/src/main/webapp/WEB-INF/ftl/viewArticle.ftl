@@ -3,8 +3,14 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/public.css">
+	<link rel="stylesheet" href="js/ueditor/themes/default/ueditor.css">
 	<link rel="icon shortcut" href="img/logo.jpg">
 	<script src="js/jquery/jquery-1.7.2.js"></script>
+	<script>
+		window.UEDITOR_HOME_URL = '${contextPath}'+'/js/ueditor/';
+	</script>
+	<script src="js/ueditor/editor_config.js"></script>
+	<script src="js/ueditor/editor_all.js"></script>
 	<script src="js/article/viewArticle.js"></script>
 	<title>八度空间-${article.title}</title>
 </head>
@@ -65,11 +71,13 @@
 						
 						<#list article.comments as comment>
 						<div class="comment-panel">
-							<div class="left comment-author">
-								<div>
-									<img alt="${comment.name}" src="http://www.gravatar.com/avatar/${comment.email}?s=200&r=pg&d=${default_person_icon}">
+							<div class="comment-author">
+								<div class="author-img">
+									<img style="margin:0;" alt="${comment.name}" src="http://www.gravatar.com/avatar/${comment.email}?s=200&r=pg&d=${default_person_icon}">
 								</div>
+								<div class="author-name">
 								<a href="${comment.url}" target="_blank" title="${comment.name}">${comment.name}</a>
+								</div>
 							</div>
 							<div class="left comment-info">
 								<div class="left">
@@ -122,7 +130,7 @@
 						</tr>
 						<tr>
 							<td colspan="3">
-								<textarea rows="10" cols="96" name="comment.commentContent"></textarea>
+								<textarea id="contentEditor" style="width: 690px;" rows="10" cols="96" name="comment.commentContent"></textarea>
 							</td>
 						</tr>
 						<tr>

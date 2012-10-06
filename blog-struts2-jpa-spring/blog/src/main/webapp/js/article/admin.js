@@ -117,7 +117,12 @@ $(function() {
 				'background', '|', 'preview' ] ],
 		// elementPathEnabled : false,
 		initialContent : '',
-		autoHeightEnabled : false
+		autoHeightEnabled : false,
+		initialStyle : 'body{font-size:14px}',
+		'fontsize' : [ 10, 11, 12, 14, 16, 18, 20, 24, 36 ],
+//		enterTag : 'br',
+		tabSize : 4,
+		tabNode : '&nbsp;'
 	};
 	var editor = new baidu.editor.ui.Editor(options);
 	editor.render("contentEditor");

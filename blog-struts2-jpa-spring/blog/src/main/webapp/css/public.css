@@ -2,7 +2,6 @@ body {
 	text-align: left;
 	font-family: Helvetica, Tahoma, Arial, sans-serif;
 	font-size: 14px;
-	line-height: 1.5;
 	color: black;
 }
 
@@ -36,7 +35,7 @@ a:hover {
 	text-decoration: underline;
 }
 
-img {
+#blog_owner img {
 	width: 100%;
 	border: 1px solid #CCC;
 }
@@ -219,6 +218,7 @@ ul.blog_categories {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
+	font-size: 13px;
 }
 
 ul.blog_categories li {
@@ -266,6 +266,7 @@ ul.blog_categories li {
 	border-right: 1px solid;
 	border-right-color: #108AC6;
 	color: #108AC6;
+	font-size: 13px;
 }
 
 .pagination {
@@ -323,7 +324,7 @@ ul.blog_categories li {
 	position: relative;
 }
 
-.blog_sibling{
+.blog_sibling {
 	border-top: 1px solid #CCC;
 	padding: 15px 0;
 }
@@ -332,26 +333,33 @@ ul.blog_categories li {
 	margin-top: 15px;
 }
 
-.comment-author {
-	float: left;
-	text-align: left;
-	width: 65px;
+.comment-panel {
+	margin-bottom: 5px;
 }
 
-.comment-author a {
+.comment-author {
+	float: left;
+	text-align: center;
+	width: 81px;
+}
+
+.author-name{
+	width: 67px;
 	font-weight: bold;
-	white-space: nowrap;
-	margin-right: 14px;
+	margin:0;
+	padding: 0;
+	text-align: center;
+	word-wrap: break-word;
+	word-break: break-all;
 }
 
 .comment-author img {
 	border: 1px solid #999;
 	height: 32px;
-	padding: 1px;
 	width: 32px;
 }
 
-.comment-author div {
+.comment-author .author-img {
 	background: url("../img/commentpoint.png") no-repeat scroll 100% 33%
 		transparent;
 	margin-top: 10px;
@@ -360,20 +368,24 @@ ul.blog_categories li {
 
 .comment-info {
 	background: url("../img/comment.gif") no-repeat scroll 0 0 #EDEFF0;
-	font-size: 12px;
+	font-size: 14px;
 	padding: 10px 15px 0;
-	width: 605px;
+	width: 589px;
 }
 
 .comment-content {
 	background: url("../img/comment.gif") no-repeat scroll 100% 100%
 		transparent;
-	font-size: 12px;
 	line-height: 145%;
 	margin: 0 -15px;
 	overflow: hidden;
 	padding: 9px 15px 10px;
 	word-wrap: break-word;
+}
+
+.comment-content p {
+	margin: 0;
+	padding: 0;
 }
 
 textarea {
