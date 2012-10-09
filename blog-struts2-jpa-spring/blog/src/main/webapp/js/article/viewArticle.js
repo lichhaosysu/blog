@@ -39,7 +39,7 @@ var CookieUtil = {
 $(function() {
 
 	var blog_comment = CookieUtil.get("blog_comment");
-
+	
 	if (blog_comment) {
 		var obj = JSON.parse(blog_comment);
 
@@ -53,7 +53,24 @@ $(function() {
 		$('#comment_name').hide();
 		$('#comment_email').hide();
 		$('#comment_url').hide();
-	} else {
+	}else if(CookieUtil.get("blog_comment_name")){
+		
+		var blog_comment_name = CookieUtil.get("blog_comment_name");
+		var blog_comment_email = CookieUtil.get("blog_comment_email");
+		var blog_comment_url = CookieUtil.get("blog_comment_url");
+		
+		$('input[name="comment.name"]').val(blog_comment_name);
+		$('input[name="comment.email"]').val(blog_comment_email);
+		$('input[name="comment.url"]').val(blog_comment_url);
+		
+		$('#toggleComment').text('更改》');
+		$('#comment_name_span').text(blog_comment_name+" ");
+
+		$('#comment_name').hide();
+		$('#comment_email').hide();
+		$('#comment_url').hide();
+		
+	}else {
 		$('td', '#welcome_tr').replaceWith(
 				$('<td colspan="3"><span>发表评论</span></td>'));
 	}
@@ -72,13 +89,35 @@ $(function() {
 
 	});
 
+	var options = {
+		toolbars : [ [ 'source', '|', 'fontfamily', 'fontsize', '|', 'bold',
+				'italic', 'underline', 'strikethrough', '|', 'link', '|',
+				'emotion', 'highlightcode' ] ],
+		elementPathEnabled : false,
+		initialContent : '',
+		autoHeightEnabled : false,
+		minFrameHeight : 200,
+		'fontsize' : [ 10, 11, 12, 13, 14, 16, 18, 20, 24, 36 ],
+		initialStyle : 'body{font-size:14px}',
+		enterTag : 'br'
+	};
+	var editor = new baidu.editor.ui.Editor(options);
+	editor.render("contentEditor");
+
+	
 	$('#commentFrom').submit(function() {
+		
+		if(editor.getContent()==''){
+			alert('评论内容不能为空！');
+			editor.focus();
+			return false;
+		}
 
 		var name = $('input[name="comment.name"]').val();
 		var email = $('input[name="comment.email"]').val();
 		var url = $('input[name="comment.url"]').val();
-		
-		if(name == ''){
+
+		if (name == '') {
 			alert('请至少输入你的姓名，用于显示评论！');
 			$('input[name="comment.name"]').focus();
 			return false;
@@ -91,27 +130,17 @@ $(function() {
 
 		var date = new Date();
 		date.setFullYear(2099);
-
-		CookieUtil.set("blog_comment", JSON.stringify(commentObj), date);
+		
+		if(window.JSON){
+			CookieUtil.set("blog_comment", JSON.stringify(commentObj), date);
+		}else{
+			CookieUtil.set("blog_comment_name", name, date);
+			CookieUtil.set("blog_comment_email", email, date);
+			CookieUtil.set("blog_comment_url", url, date);
+		}
 
 		return true;
 
 	});
-
-	var options = {
-		toolbars : [ [ 'fontfamily', 'fontsize', '|', 'bold', 'italic',
-				'underline', 'strikethrough', '|', 'link', '|', 'emotion',
-				'highlightcode' ] ],
-		initialContent : '',
-		autoHeightEnabled : false,
-		minFrameHeight : 320,
-		'fontsize' : [ 10, 11, 12, 14, 16, 18, 20, 24, 36 ],
-		initialStyle : 'body{font-size:14px}',
-		enterTag : 'br',
-		tabSize : 4,
-		tabNode : '&nbsp;'
-	};
-	var editor = new baidu.editor.ui.Editor(options);
-	editor.render("contentEditor");
-
+	
 });

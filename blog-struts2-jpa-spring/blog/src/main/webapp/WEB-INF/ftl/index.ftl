@@ -29,7 +29,6 @@
 	<title>八度空间-倾注世间之爱于设计与创作</title>
 </head>
 <body>
-<div id="header"></div>
 <div id="page">
 
 	<div id="branding" class="clearfix">

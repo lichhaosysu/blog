@@ -11,13 +11,24 @@
 	</script>
 	<script src="js/ueditor/editor_config.js"></script>
 	<script src="js/ueditor/editor_all.js"></script>
+	<!--
+	<script src="js/ueditor/third-party/SyntaxHighlighter/shCore.js"></script> 
+	<link href="js/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"  rel="stylesheet"> 
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	-->
+	
+	<script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+	<script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shBrushJava.js"></script>
+	<link type="text/css" rel="stylesheet" href="js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+	
 	<script src="js/article/viewArticle.js"></script>
 	<title>八度空间-${article.title}</title>
 </head>
 <body>
 <div id="header"></div>
 <div id="page">
-
 	<div id="branding" class="clearfix">
         <div id="blog_name">
           <h1><a href="/">八度空间</a></h1>
@@ -34,7 +45,6 @@
           <div id="fd"></div>         
         </div>
 	</div>
-	
 	<div id="content" class="clearfix">
 		<div id="main">
 			<div class="blog_main">
@@ -50,7 +60,7 @@
 				    </ul>
 				    <div class="news_tag"></div>
 				</div>		
-				<div class="blog_content">${article.content}</div>	
+				<div class="blog_content">${article.content}</div>
 				<div class="blog_sibling">
 					<!-- JiaThis Button BEGIN -->
 					<div class="jiathis_style_32x32">
@@ -82,6 +92,7 @@
 
 				</div>	
 				<div class="comments" id="comments">
+					<h3 class="reply-title">评论（${article.comments?size}）</h3>
 					<div class="comment-body">
 						<#if article.comments?size == 0>
 						<span>还没有任何评论</span>
@@ -113,20 +124,26 @@
 						
 					</div>
 				</div>
-				<form id="commentFrom" action="commentArticle.action" method="post">
+				
+				<form style="margin:0;paddingL:0;" id="commentFrom" action="commentArticle.action" method="post">
 				<input type="hidden" name="article.articleId" value="${article.articleId}" />
-				<table id="commentForm" class="comment-form">
+				<table class="comment-form">
 					<tbody>
+						<tr>
+							<td colspan="3">
+							<h3 style="margin: 3px 0 0 0;" class="reply-title">发表评论</h3>
+							</td>
+						</tr>
 						<tr id="welcome_tr">
 							<td colspan="3">
-							<span>欢迎回来，<strong><span id="comment_name_span"></span></strong></span><a id="toggleComment" style="cursor: pointer;">隐藏》</a>
+							<span>欢迎回来：<strong><span id="comment_name_span"></span></strong></span><a id="toggleComment" style="cursor: pointer;">隐藏》</a>
 							</td>
 						</tr>
 						<tr id="comment_name">
-							<td width="208px">
+							<td width="10%" style="width:200px">
 								<input type="text" name="comment.name">
 							</td>
-							<td colspan="2" width="400px">
+							<td colspan="2" width="90%">
 								姓名（必填）
 							</td>
 						</tr>
@@ -152,13 +169,14 @@
 							</td>
 						</tr>
 						<tr>
-							<td colspan="3" align="right">
-								<button type="submit">提交评论</button>
+							<td colspan="3" width="690px" align="right">
+								<button id="submit-button" type="submit">提交评论</button>
 							</td>
 						</tr>
 					</tbody>
 				</table>		
-				</form>					
+			</form>
+					
 			</div>
 			
 		</div>

@@ -115,14 +115,12 @@ $(function() {
 				'backcolor', '|', 'link', 'unlink', '|', 'insertimage',
 				'emotion', 'attachment', 'highlightcode', 'template',
 				'background', '|', 'preview' ] ],
-		// elementPathEnabled : false,
+		elementPathEnabled : false,
 		initialContent : '',
 		autoHeightEnabled : false,
 		initialStyle : 'body{font-size:14px}',
-		'fontsize' : [ 10, 11, 12, 14, 16, 18, 20, 24, 36 ],
-//		enterTag : 'br',
-		tabSize : 4,
-		tabNode : '&nbsp;'
+		'fontsize' : [ 10, 11, 12, 13, 14, 16, 18, 20, 24, 36 ],
+		enterTag : 'br'
 	};
 	var editor = new baidu.editor.ui.Editor(options);
 	editor.render("contentEditor");

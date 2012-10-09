@@ -2,9 +2,20 @@ body {
 	text-align: left;
 	font-family: Helvetica, Tahoma, Arial, sans-serif;
 	font-size: 14px;
+	line-height: 1.5;
 	color: black;
 }
 
+/*
+body {
+	font-family: Helvetica, Geneva, Arial, sans-serif;
+	font-size: 1em;
+	font-style: normal;
+	font-weight: normal;
+	color: #333;
+	line-height: 1.35em;
+}
+*/
 ul {
 	margin: 0 0 1.5em 0;
 	padding: 0;
@@ -403,41 +414,37 @@ textarea {
 }
 
 .comment-form textarea {
-	font-size: 12px;
 	height: auto;
 	width: 690px;
 }
 
-button,.button {
-	background: url(../img/icon.png) repeat center bottom;
-	border: 1px solid;
-	border-radius: 4px;
-	height: 28px;
-	margin: 0;
-	padding: 0 6px;
-	vertical-align: top;
-	border-color: #CCC #BBB #A0A0A0;
+h3.reply-title {
+	background: #3F89C8;
+	color: white;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	text-indent: 0.3em;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 1.5em;
+	margin: 5px 0 0 0;
 }
 
-button:hover,.button:hover {
-	border-color: #BBB;
-}
-
-.comment-form button {
-	background: none repeat scroll 0 0 #B4D666;
-	border-color: #B4D666 #81B840 #81B840 #B4D666;
-	border-radius: 0px;
+#submit-button {
+	height: 25px;
+	width: 130px;
+	background: #3F89C8;
+	border-color: #5E9CD0 #265882 #265882 #5E9CD0;
 	border-style: solid;
 	border-width: 1px;
-	color: #2970A6;
-	font-size: 12px;
-	height: 22px;
-	line-height: 22px;
-	padding: 0px 6px;
+	text-indent: 0;
+	padding: 0;
+	margin: 5px 0;
+	color: white;
+	font-size: 14px;
+	cursor: pointer;
 }
 
-.comment-form button:hover {
-	background: none repeat scroll 0 0 #98C64C;
-	border-color: #76B33A #98C64C #98C64C #76B33A;
-	color: #074A7E;
+#submit-button:hover {
+	background: #227AD1;
 }
