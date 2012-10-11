@@ -27,11 +27,10 @@
   -moz-border-radius: 0 0 0 0 !important;
   -webkit-border-radius: 0 0 0 0 !important;
   background: none !important;
-  /*background-color: #E0E0E0;*/
   border: 0 !important;
-  /*bottom: auto !important;*/
+  bottom: auto !important;
   float: none !important;
-  /*height: auto !important;*/
+  height: auto !important;
   left: auto !important;
   line-height: 1.1em !important;
   margin: 0 !important;
@@ -42,7 +41,7 @@
   right: auto !important;
   text-align: left !important;
   top: auto !important;
-  /*vertical-align: baseline !important;*/
+  vertical-align: baseline !important;
   width: auto !important;
   box-sizing: content-box !important;
   font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
@@ -51,19 +50,13 @@
   font-size: 1em !important;
   min-height: inherit !important;
   min-height: auto !important;
-  /*自动折行*/
-  /*white-space:nowrap;*/
 }
-
-.syntaxhighlighter .container div{
-    /*height: auto !important;*/
-    height:100%\9!important;
-}
-
+.syntaxhighlighter table {margin: 1px 0 !important;}
 .syntaxhighlighter {
-  width: 96% !important;
+  width: 100% !important;
   margin: 1em 0 1em 0 !important;
   position: relative !important;
+  overflow: auto !important;
   font-size: 1em !important;
 }
 .syntaxhighlighter.source {
@@ -76,19 +69,17 @@
   font-style: italic !important;
 }
 .syntaxhighlighter .line {
-  /*white-space: pre !important;*/
+  white-space: pre !important;
 }
 .syntaxhighlighter table {
   width: 100% !important;
-    border: 1px solid #c0c0c0 !important;
 }
 .syntaxhighlighter table caption {
   text-align: left !important;
   padding: .5em 0 0.5em 1em !important;
 }
 .syntaxhighlighter table td.code {
-  width: 92% !important;
-  padding-top: 5px\9!important;
+  width: 100% !important;
 }
 .syntaxhighlighter table td.code .container {
   position: relative !important;
@@ -109,16 +100,12 @@
 .syntaxhighlighter table td.gutter .line {
   text-align: right !important;
   padding: 0 0.5em 0 1em !important;
-  /*太窄时右边的显示行数会下沉*/
-  white-space:nowrap;
 }
 .syntaxhighlighter table td.code .line {
   padding: 0 1em !important;
-  padding:1px 1em\9!important;
 }
 .syntaxhighlighter.nogutter td.code .container textarea, .syntaxhighlighter.nogutter td.code .line {
   padding-left: 0em !important;
-
 }
 .syntaxhighlighter.show {
   display: block !important;
@@ -167,7 +154,7 @@
 }
 .syntaxhighlighter.ie {
   font-size: .9em !important;
-  /*3*/
+  padding: 1px 0 1px 0 !important;
 }
 .syntaxhighlighter.ie .toolbar {
   line-height: 8px !important;
@@ -245,11 +232,11 @@
   background-color: white !important;
 }
 .syntaxhighlighter .line.alt2 {
-  background-color: #fafafa !important;
+  background-color: white !important;
 }
-/*.syntaxhighlighter .line.highlighted.alt1, .syntaxhighlighter .line.highlighted.alt2 {*/
-  /*background-color: #e0e0e0 !important;*/
-/*}*/
+.syntaxhighlighter .line.highlighted.alt1, .syntaxhighlighter .line.highlighted.alt2 {
+  background-color: #e0e0e0 !important;
+}
 .syntaxhighlighter .line.highlighted.number {
   color: black !important;
 }
@@ -257,8 +244,7 @@
   color: black !important;
 }
 .syntaxhighlighter .gutter {
-  color: #000 !important;
-    padding: 5px !important;
+  color: #afafaf !important;
 }
 .syntaxhighlighter .gutter .line {
   border-right: 3px solid #6ce26c !important;

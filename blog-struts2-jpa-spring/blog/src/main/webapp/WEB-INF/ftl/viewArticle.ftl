@@ -8,6 +8,7 @@
 	<script src="js/jquery/jquery-1.7.2.js"></script>
 	<script>
 		window.UEDITOR_HOME_URL = '${contextPath}'+'/js/ueditor/';
+		var contextPath = '${contextPath}';
 	</script>
 	<script src="js/ueditor/editor_config.js"></script>
 	<script src="js/ueditor/editor_all.js"></script>

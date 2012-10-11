@@ -107,6 +107,8 @@ $(function() {
 });
 
 $(function() {
+	
+//	SyntaxHighlighter.highlight();
 
 	var options = {
 		toolbars : [ [ 'fullscreen', 'source', '|', 'undo', 'redo', '|',
@@ -121,9 +123,10 @@ $(function() {
 		initialStyle : 'body{font-size:14px}',
 		'fontsize' : [ 10, 11, 12, 13, 14, 16, 18, 20, 24, 36 ],
 		enterTag : 'br',
-		highlightJsUrl : UEDITOR_HOME_URL + "third-party/SyntaxHighlighter/shCore.js",
-		highlightCssUrl : UEDITOR_HOME_URL
-				+ "third-party/SyntaxHighlighter/shCoreDefault.css"
+//		highlightJsUrl : UEDITOR_HOME_URL + "third-party/SyntaxHighlighter/shCore.js",
+//		highlightCssUrl : UEDITOR_HOME_URL
+//				+ "third-party/SyntaxHighlighter/shCoreDefault.css",
+		iframeCssUrl: contextPath + '/js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css'
 	};
 	var editor = new baidu.editor.ui.Editor(options);
 	editor.render("contentEditor");
