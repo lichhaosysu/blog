@@ -120,7 +120,10 @@ $(function() {
 		autoHeightEnabled : false,
 		initialStyle : 'body{font-size:14px}',
 		'fontsize' : [ 10, 11, 12, 13, 14, 16, 18, 20, 24, 36 ],
-		enterTag : 'br'
+		enterTag : 'br',
+		highlightJsUrl : UEDITOR_HOME_URL + "third-party/SyntaxHighlighter/shCore.js",
+		highlightCssUrl : UEDITOR_HOME_URL
+				+ "third-party/SyntaxHighlighter/shCoreDefault.css"
 	};
 	var editor = new baidu.editor.ui.Editor(options);
 	editor.render("contentEditor");

@@ -6,16 +6,6 @@ body {
 	color: black;
 }
 
-/*
-body {
-	font-family: Helvetica, Geneva, Arial, sans-serif;
-	font-size: 1em;
-	font-style: normal;
-	font-weight: normal;
-	color: #333;
-	line-height: 1.35em;
-}
-*/
 ul {
 	margin: 0 0 1.5em 0;
 	padding: 0;
@@ -202,7 +192,6 @@ div#local {
 	margin: auto;
 	width: 700px;
 	border-bottom: 1px dotted;
-	padding: 10px 11px 15px;
 	margin-bottom: 10px;
 }
 
@@ -315,7 +304,7 @@ ul.blog_categories li {
 
 .posttime-MY {
 	border-bottom: 1px solid white;
-	font-size: 9px;
+	font-size: 10px;
 	height: 15px;
 	padding-top: 5px;
 	text-align: center;

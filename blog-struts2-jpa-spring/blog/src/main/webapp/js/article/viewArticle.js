@@ -39,7 +39,7 @@ var CookieUtil = {
 $(function() {
 
 	var blog_comment = CookieUtil.get("blog_comment");
-	
+
 	if (blog_comment) {
 		var obj = JSON.parse(blog_comment);
 
@@ -53,24 +53,24 @@ $(function() {
 		$('#comment_name').hide();
 		$('#comment_email').hide();
 		$('#comment_url').hide();
-	}else if(CookieUtil.get("blog_comment_name")){
-		
+	} else if (CookieUtil.get("blog_comment_name")) {
+
 		var blog_comment_name = CookieUtil.get("blog_comment_name");
 		var blog_comment_email = CookieUtil.get("blog_comment_email");
 		var blog_comment_url = CookieUtil.get("blog_comment_url");
-		
+
 		$('input[name="comment.name"]').val(blog_comment_name);
 		$('input[name="comment.email"]').val(blog_comment_email);
 		$('input[name="comment.url"]').val(blog_comment_url);
-		
+
 		$('#toggleComment').text('更改》');
-		$('#comment_name_span').text(blog_comment_name+" ");
+		$('#comment_name_span').text(blog_comment_name + " ");
 
 		$('#comment_name').hide();
 		$('#comment_email').hide();
 		$('#comment_url').hide();
-		
-	}else {
+
+	} else {
 		$('td', '#welcome_tr').replaceWith(
 				$('<td colspan="3"><span>发表评论</span></td>'));
 	}
@@ -88,7 +88,9 @@ $(function() {
 		}
 
 	});
-
+	
+	SyntaxHighlighter.highlight();
+	
 	var options = {
 		toolbars : [ [ 'source', '|', 'fontfamily', 'fontsize', '|', 'bold',
 				'italic', 'underline', 'strikethrough', '|', 'link', '|',
@@ -99,15 +101,18 @@ $(function() {
 		minFrameHeight : 200,
 		'fontsize' : [ 10, 11, 12, 13, 14, 16, 18, 20, 24, 36 ],
 		initialStyle : 'body{font-size:14px}',
-		enterTag : 'br'
+		enterTag : 'br',
+		highlightJsUrl : UEDITOR_HOME_URL + "third-party/SyntaxHighlighter/shCore.js",
+		highlightCssUrl : UEDITOR_HOME_URL
+				+ "third-party/SyntaxHighlighter/shCoreDefault.css"
 	};
+
 	var editor = new baidu.editor.ui.Editor(options);
 	editor.render("contentEditor");
-
 	
 	$('#commentFrom').submit(function() {
-		
-		if(editor.getContent()==''){
+
+		if (editor.getContent() == '') {
 			alert('评论内容不能为空！');
 			editor.focus();
 			return false;
@@ -130,10 +135,10 @@ $(function() {
 
 		var date = new Date();
 		date.setFullYear(2099);
-		
-		if(window.JSON){
+
+		if (window.JSON) {
 			CookieUtil.set("blog_comment", JSON.stringify(commentObj), date);
-		}else{
+		} else {
 			CookieUtil.set("blog_comment_name", name, date);
 			CookieUtil.set("blog_comment_email", email, date);
 			CookieUtil.set("blog_comment_url", url, date);
@@ -142,5 +147,5 @@ $(function() {
 		return true;
 
 	});
-	
+
 });

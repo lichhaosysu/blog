@@ -11,17 +11,18 @@
 	</script>
 	<script src="js/ueditor/editor_config.js"></script>
 	<script src="js/ueditor/editor_all.js"></script>
-	<!--
+	
 	<script src="js/ueditor/third-party/SyntaxHighlighter/shCore.js"></script> 
+	<!--
 	<link href="js/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css"  rel="stylesheet"> 
 	<script type="text/javascript">SyntaxHighlighter.all();</script>
 	-->
-	
+	<!--
 	<script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
 	<script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
 	<script type="text/javascript" src="js/syntaxhighlighter_3.0.83/scripts/shBrushJava.js"></script>
+	-->
 	<link type="text/css" rel="stylesheet" href="js/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
-	<script type="text/javascript">SyntaxHighlighter.all();</script>
 	
 	<script src="js/article/viewArticle.js"></script>
 	<title>八度空间-${article.title}</title>
@@ -165,7 +166,11 @@
 						</tr>
 						<tr>
 							<td colspan="3">
-								<textarea id="contentEditor" style="width: 690px;" rows="10" cols="96" name="comment.commentContent"></textarea>
+								<#--
+								<script type="text/plain" id="contentEditor" style="width:690px" name="comment.commentContent"></script>
+								-->
+								<textarea id="contentEditor" style="width: 690px; resize: none;" rows="10" cols="96" name="comment.commentContent"></textarea>
+								
 							</td>
 						</tr>
 						<tr>

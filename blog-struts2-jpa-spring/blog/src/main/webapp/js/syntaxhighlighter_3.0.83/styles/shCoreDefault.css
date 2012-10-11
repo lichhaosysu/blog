@@ -51,7 +51,7 @@
   min-height: inherit !important;
   min-height: auto !important;
 }
-
+.syntaxhighlighter table {margin: 1px 0 !important;}
 .syntaxhighlighter {
   width: 100% !important;
   margin: 1em 0 1em 0 !important;

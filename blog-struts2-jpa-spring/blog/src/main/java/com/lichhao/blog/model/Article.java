@@ -28,7 +28,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+ /*
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+*/
 @Table(name = "article")
 public class Article implements Serializable {
 
