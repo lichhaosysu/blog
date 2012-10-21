@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lichhao.blog.model.Article;
+import com.lichhao.blog.model.Comment;
 import com.lichhao.blog.model.Tag;
 import com.lichhao.blog.util.Constants;
 
@@ -125,6 +126,23 @@ public class ArticleDao {
 	@Transactional
 	public void saveTag(Tag tag) {
 		entityManager.persist(tag);
+	}
+	
+	public Comment findCommentById(String commentId) {
+		TypedQuery<Comment> query = entityManager.createQuery(
+				"from Comment where commentId = :commentId", Comment.class);
+		query.setParameter("commentId", commentId);
+		Comment comment = null;
+		try {
+			comment = query.getSingleResult();
+		} catch (NoResultException e) {
+		}
+		return comment;
+	}
+	
+	@Transactional
+	public Comment updateComment(Comment comment) {
+		return entityManager.merge(comment);
 	}
 
 }

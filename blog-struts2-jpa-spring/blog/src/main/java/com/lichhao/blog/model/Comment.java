@@ -2,11 +2,21 @@ package com.lichhao.blog.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,6 +48,11 @@ public class Comment implements Serializable {
 	@Column(name = "create_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
+
+	@OneToMany(cascade = { CascadeType.PERSIST,CascadeType.MERGE }, fetch = FetchType.LAZY)
+	@JoinColumns(value = { @JoinColumn(name = "rep_comment_id", referencedColumnName = "comment_id") })
+	@OrderBy("createDate ASC")
+	private Set<Comment> subComments = new HashSet<Comment>();
 
 	public String getCommentId() {
 		return commentId;
@@ -85,6 +100,14 @@ public class Comment implements Serializable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public Set<Comment> getSubComments() {
+		return subComments;
+	}
+
+	public void setSubComments(Set<Comment> subComments) {
+		this.subComments = subComments;
 	}
 
 }

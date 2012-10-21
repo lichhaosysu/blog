@@ -71,8 +71,8 @@ $(function() {
 		$('#comment_url').hide();
 
 	} else {
-		$('td', '#welcome_tr').replaceWith(
-				$('<td colspan="3"><span>发表评论</span></td>'));
+//		$('td', '#welcome_tr').replaceWith($('<td colspan="3"><span>发表评论</span></td>'));
+		$('td', '#welcome_tr').remove();
 	}
 
 	$('#toggleComment').click(function() {
@@ -147,6 +147,16 @@ $(function() {
 
 		return true;
 
+	});
+	
+	$('.reply_comment').click(function(){
+		
+		var panel = $(this).parent().parent().parent();
+		var id = panel.attr('id');
+		$('#reply_comment_id').val(id);
+		var name = $('div.author-img-left>img',panel).attr('alt');
+		editor.focus();
+		editor.setContent('<a href="#'+id+'">'+'@'+name+'</a><br/><br/>');
 	});
 
 });

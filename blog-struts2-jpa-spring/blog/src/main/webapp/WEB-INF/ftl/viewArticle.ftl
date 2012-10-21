@@ -101,16 +101,43 @@
 						</#if>
 						
 						<#list article.comments as comment>
-						<div class="comment-panel">
-							<div class="comment-author">
-								<div class="author-img">
+						<div id="${comment.commentId}" class="comment-panel">
+							<div class="left comment-author">
+								<div class="author-img-left">
 									<img style="margin:0;" alt="${comment.name}" src="http://www.gravatar.com/avatar/${comment.email}?s=200&r=pg&d=${default_person_icon}">
 								</div>
-								<div class="author-name">
+								<div class="author-name-left">
 								<a href="${comment.url}" target="_blank" title="${comment.name}">${comment.name}</a>
 								</div>
 							</div>
 							<div class="left comment-info">
+								<div class="left">
+									${comment.createDate}
+								</div>
+								<div class="right">
+									<a class="reply_comment" href="javascript:void();">回复</a>
+								</div>
+								<div class="clear">
+								</div>
+								<div class="comment-content">
+									${comment.commentContent}
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div>						
+						
+						<#list comment.subComments as comment>
+						<div class="comment-panel">
+							<div class="right comment-author">
+								<div class="author-img-right">
+									<img style="margin:0;" alt="${comment.name}" src="http://www.gravatar.com/avatar/${comment.email}?s=200&r=pg&d=${default_person_icon}">
+								</div>
+								<div class="author-name-right">
+								<a href="${comment.url}" target="_blank" title="${comment.name}">${comment.name}</a>
+								</div>
+							</div>
+							
+							<div class="right comment-info">
 								<div class="left">
 									${comment.createDate}
 								</div>
@@ -121,13 +148,14 @@
 								</div>
 							</div>
 							<div class="clear"></div>
-						</div>						
+						</div>
 						</#list>
-						
+						</#list>
 					</div>
 				</div>
 				
 				<form style="margin:0;paddingL:0;" id="commentFrom" action="commentArticle.action" method="post">
+				<input type="hidden" id="reply_comment_id" name="replyCommentId" value=""/>
 				<input type="hidden" name="article.articleId" value="${article.articleId}" />
 				<table class="comment-form">
 					<tbody>

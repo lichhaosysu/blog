@@ -44,6 +44,8 @@ public class ArticleAction extends BaseAction {
 
 	private Comment comment;
 
+	private String replyCommentId;
+
 	@Action(value = "admin", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/ftl/admin.ftl") })
 	public String admin() throws Exception {
 		tags = articleDao.findAllTags();
@@ -66,6 +68,8 @@ public class ArticleAction extends BaseAction {
 	public String saveArticle() throws Exception {
 
 		if (!StringUtils.isEmpty(article.getArticleId())) {
+
+			article = articleDao.findArticleById(article.getArticleId());
 			Date date = new Date();
 			article.setModifyDate(date);
 			if (StringUtils.isEmpty(tag)) {
@@ -125,11 +129,19 @@ public class ArticleAction extends BaseAction {
 	public String commentArticle() throws Exception {
 
 		article = articleDao.findArticleById(article.getArticleId());
-		comment.setCreateDate(new Date());
-		comment.setEmail(MD5Util.MD5(comment.getEmail()));
+		if(StringUtils.isEmpty(replyCommentId)){
+			comment.setCreateDate(new Date());
+			comment.setEmail(MD5Util.MD5(comment.getEmail()));
+			article.getComments().add(comment);
+			article = articleDao.update(article);
+		}else{
+			Comment replyComment = articleDao.findCommentById(replyCommentId);
+			comment.setCreateDate(new Date());
+			comment.setEmail(MD5Util.MD5(comment.getEmail()));
+			replyComment.getSubComments().add(comment);
+			articleDao.updateComment(replyComment);
+		}
 
-		article.getComments().add(comment);
-		article = articleDao.update(article);
 
 		// request.getRequestDispatcher("viewArticle.action?article.articleId="+article.getArticleId()+"#comments").forward(request,
 		// response);
@@ -146,11 +158,11 @@ public class ArticleAction extends BaseAction {
 				"http://lichhao.com/blog/img/default-person.png", "utf-8"));
 		article = articleDao.findArticleById(article.getArticleId());
 		article.setVisitCount(article.getVisitCount() + 1);
-		
+
 		article = articleDao.update(article);
 		preArticle = articleDao.findPreArticle(article);
 		nextArticle = articleDao.findNextArticle(article);
-		
+
 		tags = new ArrayList<Tag>();
 		tags.addAll(article.getTags());
 		return "success";
@@ -244,6 +256,14 @@ public class ArticleAction extends BaseAction {
 
 	public void setNextArticle(Article nextArticle) {
 		this.nextArticle = nextArticle;
+	}
+
+	public String getReplyCommentId() {
+		return replyCommentId;
+	}
+
+	public void setReplyCommentId(String replyCommentId) {
+		this.replyCommentId = replyCommentId;
 	}
 
 }
