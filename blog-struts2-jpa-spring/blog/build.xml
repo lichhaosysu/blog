@@ -167,7 +167,7 @@
 		<!-- 解压包到指定目录 -->
 		<sshexec host="${ssh.url}" username="${ssh.user}" password="${ssh.password}" trust="true" command="cd /home/lee/software/weblogic10/user_projects/upload/blog_root;unzip blog.war -d blog" />
 	</target>
-	<!-- 从tomat的webapp下发布应用到173 -->
+	<!-- 从tomat的webapp下发布应用到 -->
 	<target name="startWeblogic">
 		<!-- 启动域 -->
 		<sshexec host="${ssh.url}" username="${ssh.user}" password="${ssh.password}" trust="true" command="cd /home/lee/software/weblogic10/user_projects/domains/blog_domain;nohup ./startWebLogic.sh &amp;" />
