@@ -75,6 +75,7 @@ public class ComicCrawlerForImanhua implements InitializingBean {
 			/**
 			 * 重启出现异常的抓取线程
 			 */
+			e.printStackTrace();
 			ComicCrawThread thread = new ComicCrawThread(url);
 			thread.setUncaughtExceptionHandler(new RestartCrawUncaughtExceptionHandler(url));
 			thread.start();

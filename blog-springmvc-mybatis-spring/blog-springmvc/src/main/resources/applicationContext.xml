@@ -30,20 +30,15 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="cacheSeconds" value="60" />
 	</bean>
-	
 	<bean class="javaget.crawl.imanhua.ComicCrawlerForImanhua">
 		<property name="comicsToCraw">
 			<list>
-				<!-- 火影忍者 -->
 				<value>http://www.imanhua.com/comic/54/</value>
-				<!-- 海贼王 -->
 				<value>http://www.imanhua.com/comic/55/</value>
-				<!-- 死神 -->
 				<value>http://www.imanhua.com/comic/120/</value>
 			</list>
 		</property>
 	</bean>
-	
 	<!--  
 	<bean id="crawler" class="javaget.crawl.Crawler">
 	</bean>

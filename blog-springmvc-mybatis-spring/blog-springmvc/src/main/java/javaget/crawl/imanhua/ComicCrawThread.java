@@ -16,8 +16,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
-import javaget.crawl.ConnectionManager;
+import javaget.crawl.imanhua.ConnectionManager;
 import javaget.crawl.imanhua.ComicCrawlerForImanhua.RestartCrawUncaughtExceptionHandler;
 
 import org.apache.commons.io.IOUtils;
@@ -95,7 +96,9 @@ public class ComicCrawThread extends Thread {
 
 	@Override
 	public void run() {
-
+		Properties prop = System.getProperties();
+		String osName = (String)prop.getProperty("os.name");
+		
 		String html = getHtmlByUrl(url);
 		Document doc = Jsoup.parse(html);
 		Elements element = doc.select("#subBookList > li >a");
@@ -109,9 +112,17 @@ public class ComicCrawThread extends Thread {
 		comicName = h1.text();
 
 		URL resource = getClass().getClassLoader().getResource("");
-		String location = resource.getFile().substring(1);
-		int index = location.indexOf("WEB-INF/classes/");
+		
+		String location = "";
 
+		//判断操作系统类型，windows系统需要去掉开头的"/"
+		if(osName.startsWith("Win")||osName.startsWith("win")){ 
+			location = resource.getFile().substring(1);
+		}else{
+			location = resource.getFile().substring(0);
+		}
+		
+		int index = location.indexOf("WEB-INF/classes/");
 		outputDir = location.substring(0, index) + "resources/imanhua";
 		File f = new File(outputDir);
 		if (!f.exists()) {
@@ -153,8 +164,11 @@ public class ComicCrawThread extends Thread {
 			HtmlPage page = null;
 			try {
 				page = webClient.getPage(href);
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+//				e.printStackTrace();
+				log.error("地址："+href+"，"+comicVolumn+"出现异常！将重试");
+				i--;
+				continue;
 			}
 
 			HtmlSelect select = (HtmlSelect) page
@@ -201,8 +215,11 @@ public class ComicCrawThread extends Thread {
 					IOUtils.closeQuietly(os);
 					IOUtils.closeQuietly(is);
 
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (Exception e) {
+//					e.printStackTrace();
+					log.warn("抓取图片地址："+pageUrl+"出现异常！将重试");
+					j--;
+					continue;
 					/**
 					 * 出现未知IO错误，重启抓取线程
 					 * 
@@ -247,8 +264,13 @@ public class ComicCrawThread extends Thread {
 				URL res = Thread.currentThread().getContextClassLoader()
 						.getResource("crawl");
 
-				cfg.setDirectoryForTemplateLoading(new File(res.getFile()
-						.substring(1)));
+				if(osName.startsWith("Win")||osName.startsWith("win")){ 
+					cfg.setDirectoryForTemplateLoading(new File(res.getFile()
+							.substring(1)));
+				}else{
+					cfg.setDirectoryForTemplateLoading(new File(res.getFile()
+							.substring(0)));
+				}
 				cfg.setObjectWrapper(new DefaultObjectWrapper());
 				cfg.setDefaultEncoding("UTF-8");
 

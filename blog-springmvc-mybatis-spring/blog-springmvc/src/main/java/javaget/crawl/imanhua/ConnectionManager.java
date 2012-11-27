@@ -1,4 +1,4 @@
-package javaget.crawl;
+package javaget.crawl.imanhua;
 
 import java.io.IOException;
 import java.io.InputStream;
