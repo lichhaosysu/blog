@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lichhao.blog.model.Article;
 import com.lichhao.blog.model.Comment;
 import com.lichhao.blog.model.Tag;
+import com.lichhao.blog.model.User;
 import com.lichhao.blog.util.Constants;
 
 @Repository("articleDao")
@@ -40,26 +41,41 @@ public class ArticleDao {
 	}
 
 	public List<Article> findAllArticles() {
-		TypedQuery<Article> query = entityManager.createQuery("from Article order by createDate desc",
-				Article.class);
+		TypedQuery<Article> query = entityManager.createQuery(
+				"from Article order by createDate desc", Article.class);
 		List<Article> articles = query.getResultList();
 		return articles;
 	}
-	
-	public List<Article> findArticlesByPage(int page){
-		
-		int articlesPerPage = Constants.ARTICLES_PER_PAGE; //每页显示15篇文章
-		TypedQuery<Article> query = entityManager.createQuery("from Article order by createDate desc",
-				Article.class);
-		query.setFirstResult(articlesPerPage*(page-1)).setMaxResults(articlesPerPage);
+
+	public List<Article> findLatestArticles() {
+		TypedQuery<Article> query = entityManager
+				.createQuery(
+						"from Article where isPublished = :isPublished order by createDate desc",
+						Article.class);
+		query.setParameter("isPublished", Boolean.TRUE);
+		query.setMaxResults(5);
+		return query.getResultList();
+	}
+
+	public List<Article> findArticlesByPage(int page) {
+
+		int articlesPerPage = Constants.ARTICLES_PER_PAGE; // 每页显示15篇文章
+		TypedQuery<Article> query = entityManager
+				.createQuery(
+						"from Article where isPublished = :isPublished order by createDate desc",
+						Article.class);
+		query.setParameter("isPublished", Boolean.TRUE);
+		query.setFirstResult(articlesPerPage * (page - 1)).setMaxResults(
+				articlesPerPage);
 		List<Article> articles = query.getResultList();
 		return articles;
-		
+
 	}
-	
-	public Integer getArticlesTotal(){
-		Query query = entityManager.createNativeQuery("select count(1) from article");
-		return ((BigInteger)(query.getResultList().get(0))).intValue();
+
+	public Integer getArticlesTotal() {
+		Query query = entityManager
+				.createNativeQuery("select count(1) from article where is_published = 1");
+		return ((BigInteger) (query.getResultList().get(0))).intValue();
 	}
 
 	public Article findArticleById(String articleId) {
@@ -73,36 +89,37 @@ public class ArticleDao {
 		}
 		return article;
 	}
-	
+
 	public Article findPreArticle(Article article) {
 		TypedQuery<Article> query = entityManager.createQuery(
 				"from Article where createDate > :createDate", Article.class);
-		query.setParameter("createDate", article.getCreateDate()).setMaxResults(1);
+		query.setParameter("createDate", article.getCreateDate())
+				.setMaxResults(1);
 		Article result = null;
 		List<Article> resultList = query.getResultList();
-		if(resultList.size() == 0){
+		if (resultList.size() == 0) {
 			return result;
-		}else{
+		} else {
 			result = resultList.get(0);
 			return result;
 		}
 	}
-	
+
 	public Article findNextArticle(Article article) {
 		TypedQuery<Article> query = entityManager.createQuery(
 				"from Article where createDate < :createDate", Article.class);
-		query.setParameter("createDate", article.getCreateDate()).setMaxResults(1);
+		query.setParameter("createDate", article.getCreateDate())
+				.setMaxResults(1);
 		Article result = null;
 		List<Article> resultList = query.getResultList();
-		if(resultList.size() == 0){
+		if (resultList.size() == 0) {
 			return result;
-		}else{
+		} else {
 			result = resultList.get(0);
 			return result;
 		}
 
 	}
-	
 
 	public List<Tag> findAllTags() {
 		TypedQuery<Tag> query = entityManager
@@ -122,12 +139,23 @@ public class ArticleDao {
 		}
 		return tag;
 	}
+	public Tag findTagByTagId(String tagId) {
+		TypedQuery<Tag> query = entityManager.createQuery(
+				"from Tag where tagId = :tagId", Tag.class);
+		query.setParameter("tagId", tagId);
+		Tag tag = null;
+		try {
+			tag = query.getSingleResult();
+		} catch (NoResultException e) {
+		}
+		return tag;
+	}
 
 	@Transactional
 	public void saveTag(Tag tag) {
 		entityManager.persist(tag);
 	}
-	
+
 	public Comment findCommentById(String commentId) {
 		TypedQuery<Comment> query = entityManager.createQuery(
 				"from Comment where commentId = :commentId", Comment.class);
@@ -139,10 +167,30 @@ public class ArticleDao {
 		}
 		return comment;
 	}
-	
+
+	public List<Comment> finLatestComments() {
+		TypedQuery<Comment> query = entityManager.createQuery(
+				"from Comment order by createDate desc", Comment.class);
+		query.setMaxResults(5);
+		return query.getResultList();
+	}
+
 	@Transactional
 	public Comment updateComment(Comment comment) {
 		return entityManager.merge(comment);
+	}
+
+	public Boolean validateUser(User user) {
+		TypedQuery<User> query = entityManager
+				.createQuery(
+						"from User where userName = :userName and password = :password order by createDate desc",
+						User.class);
+		query.setParameter("userName", user.getUserName());
+		query.setParameter("password", user.getPassword());
+		
+		List<User> userList = query.getResultList();
+		
+		return userList.size() != 0;
 	}
 
 }

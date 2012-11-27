@@ -1,1 +1,13 @@
-/target
+﻿*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.ipr
+.project
+.settings
+.classpath
+.idea
+target
+build
+build.xml

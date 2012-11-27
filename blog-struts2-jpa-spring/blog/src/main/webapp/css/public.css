@@ -177,7 +177,15 @@ div#main a {
 div#main a:hover {
 	text-decoration: underline;
 }
-
+div#local h5 {
+	margin-left: 10px;
+}
+h5 {
+	line-height: 1.3em;
+	margin: 0 0 0.25em 0;
+	padding: 0;
+	color: black;
+}
 div#local {
 	width: 188px;
 	border: 1px black solid;
@@ -187,7 +195,26 @@ div#local {
 	float: left;
 	display: inline;
 }
-
+div#local a {
+	color: #108AC6;
+	text-decoration: none;
+}
+div#local a:hover {
+	text-decoration: underline;
+}
+div#local li {
+	font-size: 13px;
+	margin-left: 25px;
+	line-height: 1.6em;
+	list-style: square;
+}
+div#local div.local_block{
+	margin-top: 10px;
+}
+ul li {
+	margin: 0 0 0 30px;
+	padding: 0;
+}
 .blog_main {
 	margin: auto;
 	width: 700px;
@@ -243,11 +270,6 @@ ul.blog_categories li {
 #blog_owner {
 	text-align: center;
 	padding: 0 13px;
-}
-
-#blog_owner_name {
-	padding-top: 5px;
-	font-weight: bold;
 }
 
 .blog_bottom {

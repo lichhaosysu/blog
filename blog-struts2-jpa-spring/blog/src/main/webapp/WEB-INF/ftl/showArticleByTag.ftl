@@ -1,22 +1,3 @@
-<#--
-底部分页栏所用到的宏,5页作为一个限度
--->
-<#macro pagination page total>
-
-<#assign x = ((page-1)/5)?int * 5+1>
-<#list 1..5 as count>
-	<#if x <= total>
-		<#if x == page>
-		<span class="current">${x}</span>
-		<#else>
-		<a href="index.action?page=${x}">${x}</a>
-		</#if>
-	</#if>
-	<#assign x = (x+1)>
-</#list>
-
-</#macro>
-
 <#escape x as x?html>
 <!DOCTYPE html>
 <html lang="zh">
@@ -25,7 +6,6 @@
 	<link rel="stylesheet" href="css/public.css">
 	<link rel="icon shortcut" href="img/logo.jpg">
 	<script src="js/jquery/jquery-1.7.2.js"></script>
-	<script src="js/article/index.js"></script>
 	<title>八度空间-倾注世间之爱于设计与创作</title>
 </head>
 <body>
@@ -39,9 +19,9 @@
         <div id="fd"></div>
         <div id="blog_navbar">
           <ul>
-            <li class="blog_navbar_for"><a href="index.action">首页</a></li>
+            <li><a href="index.action">首页</a></li>
             <li><a href="admin.action">写博文</a></li>
-            <li><a href="showTags.action">标签墙</a></li>
+            <li class="blog_navbar_for"><a href="showTags.action">标签墙</a></li>
             <li><a href="aboutMe.action">关于我</a></li>
           </ul>
           <div id="fd"></div>         
@@ -50,8 +30,8 @@
 	
 	<div id="content" class="clearfix">
 		<div id="main">
-		<#if articles?size != 0>
-			<#list articles as article>
+		<#if thisTag.articles?size != 0>
+			<#list thisTag.articles as article>
 				<div class="blog_main">
 					<div class="posttime-blue">
 							<div class="posttime-MY">
@@ -84,24 +64,8 @@
   					</div>		
 				</div>
 			</#list>
-				<div class="pagination">
-					<#if page gt 1>
-					<a href="index.action?page=${page-1}">« 上一页</a> 
-					</#if>
-					<@pagination page=page total=total />
-					<#--
-					<span class="current">1</span> 
-					<a href="#">2</a> 
-					<a href="#">3</a> 
-					<a href="#">4</a> 
-					<a href="#">5</a> 
-					-->
-					<#if page lt total>
-					<a href="index.action?page=${page+1}">下一页 »</a> 
-					</#if>
-				</div>
 		<#else>
-		<span>还没有写任何博文，赶快<a href="admin.action">去写一篇</a>吧</span>
+		<span>该标签下还没有任何博文，赶快<a href="admin.action">去写一篇</a>吧</span>
 		</#if>
 		</div>
 		<div id="local">

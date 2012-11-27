@@ -41,8 +41,8 @@
           <ul>
             <li class="blog_navbar_for"><a href="index.action">首页</a></li>
             <li><a href="admin.action">写博文</a></li>
-            <li><a href="#">标签墙</a></li>
-            <li><a href="#">关于我</a></li>
+            <li><a href="showTags.action">标签墙</a></li>
+            <li><a href="aboutMe.action">关于我</a></li>
           </ul>
           <div id="fd"></div>         
         </div>
@@ -219,8 +219,27 @@
 			  <a href="javascript:void();">
 			  <img src="${contextPath}/img/IMG_7552.JPG" title="八度空间：倾注世间之爱于创新和设计">
 			  </a>
-			  <span id="blog_owner_name">相见欢</span>
 			</div>
+			<div class="local_block">
+                <h5>最新文章</h5>
+                <ul>
+	            <#list latestArticles as article>
+				<li>
+					<a href="viewArticle.action?article.articleId=${article.articleId}" title="${article.title}">${article.title}</a>
+				</li>
+				</#list>
+                </ul>
+            </div>			
+            <div class="local_block">
+                <h5>最新评论</h5>
+                <ul>
+	            <#list latestComments as comment>
+				<li>
+					<a href="${comment.url}">${comment.name}：</a>${comment.commentContent}
+				</li>
+				</#list>
+                </ul>
+            </div>
 		</div>
 	</div>
 </div>

@@ -12,7 +12,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	
 	<filter>
 		<filter-name>jpaFilter</filter-name>
 		<filter-class>

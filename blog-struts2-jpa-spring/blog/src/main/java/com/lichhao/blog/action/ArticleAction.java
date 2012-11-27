@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.lichhao.blog.dao.ArticleDao;
 import com.lichhao.blog.model.Article;
 import com.lichhao.blog.model.Comment;
+import com.lichhao.blog.model.User;
 import com.lichhao.blog.util.Constants;
 import com.lichhao.blog.util.MD5Util;
 import com.lichhao.blog.model.Tag;
@@ -34,9 +36,13 @@ public class ArticleAction extends BaseAction {
 
 	private List<Article> articles;
 
+	private List<Article> latestArticles;
+
 	private List<Tag> tags;
 
 	private String tag;
+
+	private Tag thisTag;
 
 	private Integer page;
 
@@ -44,10 +50,34 @@ public class ArticleAction extends BaseAction {
 
 	private Comment comment;
 
+	private List<Comment> latestComments;
+
 	private String replyCommentId;
 
-	@Action(value = "admin", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/ftl/admin.ftl") })
+	private User user;
+
+	@Action(value = "admin", results = {
+			@Result(name = "success", type = "freemarker", location = "/WEB-INF/ftl/admin.ftl"),
+			@Result(name = "login", location = "/login.jsp") })
 	public String admin() throws Exception {
+
+		Object isLogin = session.get("isLogin");
+
+		if (isLogin == null) {
+			if (user != null) {
+				Boolean isValidate = articleDao.validateUser(user);
+				if (isValidate) {
+					// request.getSession().setAttribute("isLogin", isValidate);
+					session.put("isLogin", isValidate);
+				} else {
+					request.setAttribute("errorMsg", "用户名密码有错误！请重新输入");
+					return "login";
+				}
+			} else {
+				return "login";
+			}
+		}
+
 		tags = articleDao.findAllTags();
 		articles = articleDao.findAllArticles();
 
@@ -69,12 +99,27 @@ public class ArticleAction extends BaseAction {
 
 		if (!StringUtils.isEmpty(article.getArticleId())) {
 
+			// 先将改动保存起来
+			// TODO:可以优化
+			String title = article.getTitle();
+			String content = article.getContent();
+			String summary = article.getSummary();
+			Boolean isPublished = article.getIsPublished();
+
 			article = articleDao.findArticleById(article.getArticleId());
+
 			Date date = new Date();
 			article.setModifyDate(date);
 			if (StringUtils.isEmpty(tag)) {
 				article.setTags(null);
 			}
+
+			// 将所做改动反映到数据库中
+			article.setContent(content);
+			article.setTitle(title);
+			article.setSummary(summary);
+			article.setIsPublished(isPublished);
+
 			articleDao.update(article);
 		} else {
 			Date date = new Date();
@@ -113,6 +158,7 @@ public class ArticleAction extends BaseAction {
 		}
 
 		articles = articleDao.findArticlesByPage(page);
+		latestArticles = articleDao.findLatestArticles();
 		Integer articlesTotal = articleDao.getArticlesTotal();
 		total = (articlesTotal + Constants.ARTICLES_PER_PAGE - 1)
 				/ Constants.ARTICLES_PER_PAGE;
@@ -121,6 +167,36 @@ public class ArticleAction extends BaseAction {
 			throw new IllegalStateException("要访问的页数超出范围！");
 		}
 
+		latestComments = articleDao.finLatestComments();
+
+		return "success";
+	}
+
+	@Action(value = "showTags", results = { @Result(name = "success", location = "/WEB-INF/ftl/showTags.ftl") })
+	public String showTags() throws Exception {
+
+		latestArticles = articleDao.findLatestArticles();
+		latestComments = articleDao.finLatestComments();
+		tags = articleDao.findAllTags();
+
+		return "success";
+	}
+
+	@Action(value = "showArticleByTag", results = { @Result(name = "success", location = "/WEB-INF/ftl/showArticleByTag.ftl") })
+	public String showArticleByTag() throws Exception {
+
+		latestArticles = articleDao.findLatestArticles();
+		latestComments = articleDao.finLatestComments();
+		thisTag = articleDao.findTagByTagId(thisTag.getTagId());
+		
+		return "success";
+	}
+	@Action(value = "aboutMe", results = { @Result(name = "success", location = "/WEB-INF/ftl/aboutMe.ftl") })
+	public String aboutMe() throws Exception {
+
+		latestArticles = articleDao.findLatestArticles();
+		latestComments = articleDao.finLatestComments();
+		
 		return "success";
 	}
 
@@ -129,19 +205,18 @@ public class ArticleAction extends BaseAction {
 	public String commentArticle() throws Exception {
 
 		article = articleDao.findArticleById(article.getArticleId());
-		if(StringUtils.isEmpty(replyCommentId)){
+		if (StringUtils.isEmpty(replyCommentId)) {
 			comment.setCreateDate(new Date());
 			comment.setEmail(MD5Util.MD5(comment.getEmail()));
 			article.getComments().add(comment);
 			article = articleDao.update(article);
-		}else{
+		} else {
 			Comment replyComment = articleDao.findCommentById(replyCommentId);
 			comment.setCreateDate(new Date());
 			comment.setEmail(MD5Util.MD5(comment.getEmail()));
 			replyComment.getSubComments().add(comment);
 			articleDao.updateComment(replyComment);
 		}
-
 
 		// request.getRequestDispatcher("viewArticle.action?article.articleId="+article.getArticleId()+"#comments").forward(request,
 		// response);
@@ -156,6 +231,8 @@ public class ArticleAction extends BaseAction {
 	public String viewArticle() throws Exception {
 		request.setAttribute("default_person_icon", URLEncoder.encode(
 				"http://lichhao.com/blog/img/default-person.png", "utf-8"));
+		latestArticles = articleDao.findLatestArticles();
+		latestComments = articleDao.finLatestComments();
 		article = articleDao.findArticleById(article.getArticleId());
 		article.setVisitCount(article.getVisitCount() + 1);
 
@@ -264,6 +341,38 @@ public class ArticleAction extends BaseAction {
 
 	public void setReplyCommentId(String replyCommentId) {
 		this.replyCommentId = replyCommentId;
+	}
+
+	public List<Article> getLatestArticles() {
+		return latestArticles;
+	}
+
+	public void setLatestArticles(List<Article> latestArticles) {
+		this.latestArticles = latestArticles;
+	}
+
+	public List<Comment> getLatestComments() {
+		return latestComments;
+	}
+
+	public void setLatestComments(List<Comment> latestComments) {
+		this.latestComments = latestComments;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Tag getThisTag() {
+		return thisTag;
+	}
+
+	public void setThisTag(Tag thisTag) {
+		this.thisTag = thisTag;
 	}
 
 }
