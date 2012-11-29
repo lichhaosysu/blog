@@ -135,9 +135,7 @@
 				<include name="blog.war" />
 			</fileset>
 		</ftp>
-		<!--
 		<delete dir="${dist}" />
-		-->
 	</target>
 	
 	<target name="uploadForWeblogic">
