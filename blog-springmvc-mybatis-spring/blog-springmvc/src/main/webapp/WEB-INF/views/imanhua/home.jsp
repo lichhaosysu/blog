@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"
+	contentType="text/html; charset=UTF-8"%>
 <%@ page import="java.net.*"%>
 <%@ page import="java.io.*"%>
 <%@ page trimDirectiveWhitespaces="true"%>
@@ -13,13 +14,11 @@ a {
 	text-decoration: underline;
 }
 
-a:HOVER {
+a:hover {
 	text-decoration: none;
 }
 </style>
-
 	</head>
-
 	<body>
 		<%
 			Writer writer = response.getWriter();
@@ -28,7 +27,8 @@ a:HOVER {
 			File dir = new File(realpath);
 			for (File file : dir.listFiles()) {
 				if (file.isDirectory()) {
-					writer.write("<a href='imanhua/"+URLEncoder.encode(file.getName(),"UTF-8")+"'>" + file.getName() + "</a>");
+					writer.write("<a href='imanhua/" + file.getName() + "'>"
+							+ file.getName() + "</a>");
 				}
 			}
 		%>
