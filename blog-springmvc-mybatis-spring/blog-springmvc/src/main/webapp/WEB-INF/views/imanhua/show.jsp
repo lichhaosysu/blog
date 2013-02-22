@@ -2,6 +2,8 @@
 	contentType="text/html; charset=UTF-8"%>
 <%@ page import="java.net.*"%>
 <%@ page import="java.io.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"></c:set>
 <%@ page trimDirectiveWhitespaces="true"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -20,10 +22,8 @@ a:hover {
 </style>
 	</head>
 	<body>
+		<p><a href='${ctx}/imanhua'>首页</a></p>
 		<%
-			Writer writer = response.getWriter();
-			writer.write("<p><a href='" + request.getContextPath()
-					+ "/imanhua'>首页</a></p>");
 			String commicName = (String) request.getAttribute("commicName");
 			String realpath = config.getServletContext().getRealPath(
 					"resources/imanhua/" + commicName);
@@ -36,15 +36,16 @@ a:hover {
 						if (!exists) {
 							exists = true;
 						}
-						writer.write("<a href='" + request.getContextPath()
-								+ "/resources/imanhua/" + commicName + "/"
-								+ file.getName() + "/index.html'>"
-								+ file.getName() + "</a>");
+		%>
+		<a href="${ctx}/resources/imanhua/<%=commicName%>/<%=file.getName()%>/index.html"><%=file.getName()%></a>
+		<%						
 					}
 				}
 			}
 			if (!exists) {
-				writer.write("<p>还没有任何漫画</p>");
+		%>
+				<p>还没有任何漫画</p>
+		<%
 			}
 		%>
 	</body>
