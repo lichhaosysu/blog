@@ -1,6 +1,8 @@
 ﻿.settings/
 target/
 build/
+classes/
+lib/
 build.xml
 .classpath
 .mymetadata
