@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<!-- Some or all of these can be flipped to true for debugging -->
+
+	<!-- 设置是否每次HTTP请求到达时，系统都重新加载资源文件 -->
+	<constant name="struts.i18n.reload" value="false" />
+
+	<!-- 设置struts 2应用是否使用开发模式 -->
+	<constant name="struts.devMode" value="false" />
+
+	<!-- 设置当struts.xml文件改变后，系统是否自动重新加载该文件 -->
+	<constant name="struts.configuration.xml.reload" value="false" />
+
+	<!-- 指定struts 2应用所需要的国际化资源文件 -->
+	<constant name="struts.custom.i18n.resources" value="globalMessages" />
+
+	<!-- 设置Web应用程序的默认Locale -->
+	<constant name="struts.locale" value="zh_CN" />
+
+	<!-- 设置Web应用程序的默认编码集。对于获取中文请求参数值 -->
+	<constant name="struts.i18n.encoding" value="utf-8" />
+
+	<!-- 设置struts 2文件上传中整个请求内容允许的最大字节数 -->
+	<constant name="struts.multipart.maxSize" value="1000000000" />
+
+	<!-- 设置需要struts 2处理的请求后缀，该属性的默认值是action。多个后缀之间以英文逗号“,”隔开 -->
+	<constant name="struts.action.extension" value="action" />
+
+	<!-- 设置struts 2是否支持动态方法调用，该属性的默认值是true -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+
+	<!-- 设置是否通过JAR文件提供静态内容服务，该属性的默认值为true -->
+	<constant name="struts.serve.static" value="true" />
+
+	<!-- 设置浏览器是否缓存静态内容，当应用处于开发阶段时，若希望每次请求都获得服务器的最新响应，则可设置该属性为false -->
+	<constant name="struts.serve.static.browserCache" value="false" />
+
+	<!-- Set to false, to prevent Convention from creating a default mapping 
+		to "execute" when there are other methods annotated as actions in the class -->
+	<constant name="struts.convention.action.alwaysMapExecute"
+		value="false" />
+	<!-- If set, only packages that start with its value will be scanned for 
+		actions -->
+	<constant name="struts.convention.package.locators.basePackage"
+		value="com.lichhao.blog.action" />
+	<!-- A boolean parameter that controls whether or not this will handle unknown 
+		actions in the same manner as Apache, Tomcat and other web servers. This 
+		handling will send back a redirect for URLs such as /foo to /foo/ if there 
+		doesn't exist an action that responds to /foo -->
+	<constant name="struts.convention.redirect.to.slash" value="false" />
+
+	<package name="basePackage" extends="struts-default">
+
+		<interceptors>
+			<interceptor-stack name="appDefault">
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">ERROR</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="appDefault" />
+
+		<global-results>
+			<result name="error">/error.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+		</global-exception-mappings>
+
+	</package>
+</struts>
