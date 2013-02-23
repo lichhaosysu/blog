@@ -1,10 +1,10 @@
-﻿.settings/
-target/
+﻿target/
 build/
 classes/
 lib/
-build.xml
+.settings
 .classpath
 .mymetadata
 .myumldata
 .project
+build.xml
