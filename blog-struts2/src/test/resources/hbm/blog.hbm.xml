@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.lichhao.blog.model">
+
+	<class name="Article" table="article">
+		<id name="articleId" type="integer" column="article_id">
+			<generator class="identity" />
+		</id>
+		<property name="title" type="string" column="title" />
+		<property name="content" type="text" column="content" />
+		<property name="summary" type="text" column="summary" />
+		<property name="visitCount" type="integer" column="visit_count" />
+		<property name="isPublished" type="boolean" column="is_published" />
+		<property name="type" type="string" column="type" />
+		<property name="link" type="string" column="link" />
+		<property name="commentStatus" type="string" column="comment_status" />
+		<property name="articleStatus" type="string" column="article_status" />
+		<property name="password" type="string" column="password" />
+		<property name="createDate" type="timestamp" column="create_date" />
+		<property name="modifyDate" type="timestamp" column="modify_date" />
+		<many-to-one name="category" column="article_cat_id"
+			class="Category" />
+		<set name="tags" table="tag_article">
+			<key column="ta_article_id" />
+			<many-to-many column="ta_tag_id" class="Tag" />
+		</set>
+		<bag name="comments" inverse="true" cascade="delete">
+			<key column="comment_article_id" />
+			<one-to-many class="Comment" />
+		</bag>
+	</class>
+
+	<class name="Comment" table="comment">
+		<id name="commentId" type="integer" column="comment_id">
+			<generator class="identity" />
+		</id>
+		<property name="commentContent" type="text" column="comment_content" />
+		<property name="commentName" type="string" column="comment_name" />
+		<property name="commentEmail" type="string" column="comment_email" />
+		<property name="commentUrl" type="string" column="comment_url" />
+		<property name="createDate" type="timestamp" column="create_date" />
+		<many-to-one name="article" column="comment_article_id"
+			class="Article" />
+		<set name="subComments" cascade="delete">
+			<key column="comment_parent_id" />
+			<one-to-many class="Comment" />
+		</set>
+
+	</class>
+
+	<class name="Category" table="category">
+		<id name="catId" type="integer" column="cat_id">
+			<generator class="identity" />
+		</id>
+		<property name="catName" type="string" column="cat_name" />
+		<property name="createDate" type="timestamp" column="create_date" />
+		<bag name="articles" inverse="true">
+			<key column="article_cat_id" />
+			<one-to-many class="Article" />
+		</bag>
+	</class>
+
+	<class name="Tag" table="tag">
+		<id name="tagId" type="integer" column="tag_id">
+			<generator class="identity" />
+		</id>
+		<property name="tagName" type="string" column="tag_name" />
+		<property name="createDate" type="timestamp" column="create_date" />
+		<set name="articles" table="tag_article" inverse="true">
+			<key column="ta_tag_id" />
+			<many-to-many column="ta_article_id" class="Article" />
+		</set>
+	</class>
+
+
+</hibernate-mapping>

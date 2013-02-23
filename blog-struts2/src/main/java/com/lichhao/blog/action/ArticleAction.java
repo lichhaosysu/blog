@@ -4,7 +4,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -16,10 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.lichhao.blog.dao.ArticleDao;
 import com.lichhao.blog.model.Article;
 import com.lichhao.blog.model.Comment;
+import com.lichhao.blog.model.Tag;
 import com.lichhao.blog.model.User;
 import com.lichhao.blog.util.Constants;
 import com.lichhao.blog.util.MD5Util;
-import com.lichhao.blog.model.Tag;
 
 @ParentPackage("basePackage")
 @Namespace("/")
@@ -97,7 +96,7 @@ public class ArticleAction extends BaseAction {
 					"actionName", "admin" }) })
 	public String saveArticle() throws Exception {
 
-		if (!StringUtils.isEmpty(article.getArticleId())) {
+		if (article.getArticleId()!=null) {
 
 			// 先将改动保存起来
 			// TODO:可以优化
@@ -207,13 +206,13 @@ public class ArticleAction extends BaseAction {
 		article = articleDao.findArticleById(article.getArticleId());
 		if (StringUtils.isEmpty(replyCommentId)) {
 			comment.setCreateDate(new Date());
-			comment.setEmail(MD5Util.MD5(comment.getEmail()));
+			comment.setCommentEmail(MD5Util.MD5(comment.getCommentEmail()));
 			article.getComments().add(comment);
 			article = articleDao.update(article);
 		} else {
 			Comment replyComment = articleDao.findCommentById(replyCommentId);
 			comment.setCreateDate(new Date());
-			comment.setEmail(MD5Util.MD5(comment.getEmail()));
+			comment.setCommentEmail(MD5Util.MD5(comment.getCommentEmail()));
 			replyComment.getSubComments().add(comment);
 			articleDao.updateComment(replyComment);
 		}

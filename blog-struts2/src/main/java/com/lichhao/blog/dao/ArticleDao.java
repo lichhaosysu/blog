@@ -18,6 +18,9 @@ import com.lichhao.blog.model.Tag;
 import com.lichhao.blog.model.User;
 import com.lichhao.blog.util.Constants;
 
+
+
+
 @Repository("articleDao")
 public class ArticleDao {
 
@@ -78,7 +81,7 @@ public class ArticleDao {
 		return ((BigInteger) (query.getResultList().get(0))).intValue();
 	}
 
-	public Article findArticleById(String articleId) {
+	public Article findArticleById(Integer articleId) {
 		TypedQuery<Article> query = entityManager.createQuery(
 				"from Article where articleId = :articleId", Article.class);
 		query.setParameter("articleId", articleId);
@@ -139,7 +142,8 @@ public class ArticleDao {
 		}
 		return tag;
 	}
-	public Tag findTagByTagId(String tagId) {
+
+	public Tag findTagByTagId(Integer tagId) {
 		TypedQuery<Tag> query = entityManager.createQuery(
 				"from Tag where tagId = :tagId", Tag.class);
 		query.setParameter("tagId", tagId);
@@ -186,10 +190,10 @@ public class ArticleDao {
 						"from User where userName = :userName and password = :password order by createDate desc",
 						User.class);
 		query.setParameter("userName", user.getUserName());
-		query.setParameter("password", user.getPassword());
-		
+		query.setParameter("password", user.getUserPassword());
+
 		List<User> userList = query.getResultList();
-		
+
 		return userList.size() != 0;
 	}
 

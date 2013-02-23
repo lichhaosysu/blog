@@ -4,53 +4,67 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.GenericGenerator;
-
 @Entity
- /*
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-*/
+/*
+ * @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+ */
 @Table(name = "article")
 public class Article implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "incrementGenerator")
-	@GenericGenerator(name = "incrementGenerator", strategy = "uuid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "article_id")
-	private String articleId;
+	private Integer articleId;
 
 	@Column(name = "title")
 	private String title;
 
+	// @Basic(fetch = FetchType.LAZY)
 	@Column(name = "content")
 	private String content;
 
+	// @Basic(fetch = FetchType.LAZY)
 	@Column(name = "summary")
 	private String summary;
 
 	@Column(name = "visit_count")
 	private Integer visitCount;
+
+	@Column(name = "is_published")
+	private Boolean isPublished;
+
+	@Column(name = "type")
+	private String type;
+
+	@Column(name = "link")
+	private String link;
+
+	@Column(name = "comment_status")
+	private String commentStatus;
+
+	@Column(name = "article_status")
+	private String articleStatus;
+
+	@Column(name = "password")
+	private String password;
 
 	@Column(name = "create_date")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -60,33 +74,22 @@ public class Article implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifyDate;
 
-	@Column(name = "is_published")
-	private Boolean isPublished;
+	@ManyToMany
+	@JoinTable(name = "tag_article", joinColumns = { @JoinColumn(name = "ta_article_id") }, inverseJoinColumns = { @JoinColumn(name = "ta_tag_id") })
+	private Set<Tag> tags = new HashSet<Tag>();
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
-	@JoinTable(name = "tag_article", joinColumns = { @JoinColumn(name = "article_id") }, inverseJoinColumns = { @JoinColumn(name = "tag_id") })
-	@OrderBy("createDate ASC")
-	private Set<Tag> tags = new HashSet<Tag>() {
-		/*
-		 * public String toString() { StringBuilder sb = new StringBuilder();
-		 * Iterator<Tag> it = iterator(); for (;;) {
-		 * sb.append(it.next().getTagName()); if (!it.hasNext()) { return
-		 * sb.toString(); } sb.append(","); } };
-		 */
-	};
-
-	@OneToMany(fetch = FetchType.LAZY, targetEntity = Comment.class, cascade = {
-			CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE,
-			CascadeType.REFRESH })
-	@JoinTable(name = "comment_article", joinColumns = { @JoinColumn(name = "article_id") }, inverseJoinColumns = { @JoinColumn(name = "comment_id") })
-	@OrderBy("createDate ASC")
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "article")
 	private List<Comment> comments = new ArrayList<Comment>();
 
-	public String getArticleId() {
+	@ManyToOne
+	@JoinColumn(name = "article_cat_id")
+	private Category category;
+
+	public Integer getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(String articleId) {
+	public void setArticleId(Integer articleId) {
 		this.articleId = articleId;
 	}
 
@@ -122,6 +125,54 @@ public class Article implements Serializable {
 		this.visitCount = visitCount;
 	}
 
+	public Boolean getIsPublished() {
+		return isPublished;
+	}
+
+	public void setIsPublished(Boolean isPublished) {
+		this.isPublished = isPublished;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getCommentStatus() {
+		return commentStatus;
+	}
+
+	public void setCommentStatus(String commentStatus) {
+		this.commentStatus = commentStatus;
+	}
+
+	public String getArticleStatus() {
+		return articleStatus;
+	}
+
+	public void setArticleStatus(String articleStatus) {
+		this.articleStatus = articleStatus;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -138,12 +189,12 @@ public class Article implements Serializable {
 		this.modifyDate = modifyDate;
 	}
 
-	public Boolean getIsPublished() {
-		return isPublished;
+	public List<Comment> getComments() {
+		return comments;
 	}
 
-	public void setIsPublished(Boolean isPublished) {
-		this.isPublished = isPublished;
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public Set<Tag> getTags() {
@@ -154,12 +205,32 @@ public class Article implements Serializable {
 		this.tags = tags;
 	}
 
-	public List<Comment> getComments() {
-		return comments;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	@Override
+	public int hashCode() {
+		return articleId.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (obj.getClass() == this.getClass()) {
+			Article article = (Article) obj;
+			return article.articleId.equals(this.articleId);
+		}
+		return false;
 	}
 
 }

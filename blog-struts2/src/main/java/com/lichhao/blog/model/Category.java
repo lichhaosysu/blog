@@ -1,52 +1,55 @@
 package com.lichhao.blog.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tag")
-public class Tag implements Serializable {
+/*
+ * @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+ */
+@Table(name = "category")
+public class Category implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "tag_id")
-	private Integer tagId;
+	@Column(name = "cat_id")
+	private Integer catId;
 
-	@Column(name = "tag_name")
-	private String tagName;
+	@Column(name = "cat_name")
+	private String catName;
 
 	@Column(name = "create_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 
-	@ManyToMany(mappedBy = "tags")
-	private Set<Article> articles = new HashSet<Article>();
+	@OneToMany(mappedBy = "category")
+	private List<Article> articles = new ArrayList<Article>();
 
-	public Integer getTagId() {
-		return tagId;
+	public Integer getCatId() {
+		return catId;
 	}
 
-	public void setTagId(Integer tagId) {
-		this.tagId = tagId;
+	public void setCatId(Integer catId) {
+		this.catId = catId;
 	}
 
-	public String getTagName() {
-		return tagName;
+	public String getCatName() {
+		return catName;
 	}
 
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
+	public void setCatName(String catName) {
+		this.catName = catName;
 	}
 
 	public Date getCreateDate() {
@@ -57,17 +60,17 @@ public class Tag implements Serializable {
 		this.createDate = createDate;
 	}
 
-	public Set<Article> getArticles() {
+	public List<Article> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(Set<Article> articles) {
+	public void setArticles(List<Article> articles) {
 		this.articles = articles;
 	}
 
 	@Override
 	public int hashCode() {
-		return tagId.hashCode();
+		return catId.hashCode();
 	}
 
 	@Override
@@ -79,10 +82,9 @@ public class Tag implements Serializable {
 			return true;
 		}
 		if (obj.getClass() == this.getClass()) {
-			Tag tag = (Tag) obj;
-			return tag.tagId.equals(this.tagId);
+			Category category = (Category) obj;
+			return category.catId.equals(this.catId);
 		}
 		return false;
 	}
-
 }

@@ -1,45 +1,44 @@
 package com.lichhao.blog.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 /*
  * @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
  */
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
 	@Id
-	@GeneratedValue(generator = "incrementGenerator")
-	@GenericGenerator(name = "incrementGenerator", strategy = "uuid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private String userId;
+	private Integer userId;
 
 	@Column(name = "user_name")
 	private String userName;
 
-	@Column(name = "password")
-	private String password;
+	@Column(name = "user_password")
+	private String userPassword;
 
 	@Column(name = "create_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 
-	public String getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -51,12 +50,12 @@ public class User {
 		this.userName = userName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
 	public Date getCreateDate() {
