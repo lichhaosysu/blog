@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.lichhao</groupId>
-	<artifactId>blog</artifactId>
+	<artifactId>blog-springmvc</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 	<name>lichhao's blog</name>
@@ -243,7 +243,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>blog</finalName>
+		<finalName>blog-springmvc</finalName>
 		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 		<outputDirectory>${basedir}/src/main/webapp/WEB-INF/classes</outputDirectory>
 		<resources>
