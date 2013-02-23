@@ -1,8 +1,10 @@
 ﻿target/
+target/test-classes/
 build/
 classes/
 lib/
 .settings/
+.myeclipse/
 .classpath
 .mymetadata
 .myumldata
