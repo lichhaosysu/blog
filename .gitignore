@@ -1,6 +1,6 @@
-﻿.settings
-target
-build
+﻿.settings/
+target/
+build/
 build.xml
 .classpath
 .mymetadata
