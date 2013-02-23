@@ -1,5 +1,5 @@
 ﻿target/
-target/test-classes/
+test-classes/
 build/
 classes/
 lib/
