@@ -42,7 +42,7 @@
 					</tr>
 					<tr>
 						<td><label>密码：</label></td>
-						<td><input type="password"" name="user.password" /></td>
+						<td><input type="password"" name="user.userPassword" /></td>
 					</tr>
 					<tr>
 						<td></td>

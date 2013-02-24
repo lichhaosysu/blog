@@ -24,7 +24,7 @@ public class BaseAction extends ActionSupport implements ServletRequestAware,
 
 	protected Map<String, Object> session;
 
-	protected ServletContext context;
+	protected ServletContext servletContext;
 
 	protected ActionContext actionContext;
 
@@ -51,7 +51,7 @@ public class BaseAction extends ActionSupport implements ServletRequestAware,
 
 	@Override
 	public void setServletContext(ServletContext context) {
-		this.context = context;
+		this.servletContext = context;
 	}
 
 	@Override

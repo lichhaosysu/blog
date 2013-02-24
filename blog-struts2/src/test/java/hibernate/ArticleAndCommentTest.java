@@ -28,15 +28,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Date;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.lichhao.blog.model.Article;
 import com.lichhao.blog.model.Comment;
@@ -48,10 +40,7 @@ import com.lichhao.blog.model.Comment;
  * 
  * @author Steve Ebersole
  */
-public class ArticleAndCommentTest {
-	private SessionFactory sessionFactory;
-
-	private Logger logger = LoggerFactory.getLogger(getClass());
+public class ArticleAndCommentTest extends BaseHibernateConfig {
 
 	@Test
 	public void test() throws Exception {
@@ -64,36 +53,6 @@ public class ArticleAndCommentTest {
 		createXmlSessionFactory();
 		testArticleAndComment();
 		closeSessionFactory();
-	}
-
-	public void createAnnotataionSessionFactory() throws Exception {
-		// A SessionFactory is set up once for an application
-		// configures settings from the hibernate.cfg.xml located in root
-		// classpath
-
-		Configuration cfg = new Configuration();
-		cfg.configure();
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-				.applySettings(cfg.getProperties()).buildServiceRegistry();
-		sessionFactory = cfg.buildSessionFactory(serviceRegistry);
-	}
-
-	public void createXmlSessionFactory() throws Exception {
-		// A SessionFactory is set up once for an application
-		// configures settings from the hibernate.cfg.xml located in root
-		// classpath
-
-		Configuration cfg = new Configuration();
-		cfg.configure("hbm/hibernate.cfg.xml");
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-				.applySettings(cfg.getProperties()).buildServiceRegistry();
-		sessionFactory = cfg.buildSessionFactory(serviceRegistry);
-	}
-
-	public void closeSessionFactory() throws Exception {
-		if (sessionFactory != null) {
-			sessionFactory.close();
-		}
 	}
 
 	public void testArticleAndComment() {
@@ -181,7 +140,6 @@ public class ArticleAndCommentTest {
 		logger.debug("-------------------------------------");
 
 		session.delete(obj);
-		// session.delete(obj.getComments().get(0));
 
 		session.getTransaction().commit();
 		session.close();

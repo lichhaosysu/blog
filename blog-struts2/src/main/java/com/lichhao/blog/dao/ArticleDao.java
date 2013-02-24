@@ -53,7 +53,7 @@ public class ArticleDao {
 	public List<Article> findLatestArticles() {
 		TypedQuery<Article> query = entityManager
 				.createQuery(
-						"from Article where isPublished = :isPublished order by createDate desc",
+						"from Article where isPublished = :isPublished and type='post' and article_status='public' order by createDate desc",
 						Article.class);
 		query.setParameter("isPublished", Boolean.TRUE);
 		query.setMaxResults(5);
@@ -65,7 +65,7 @@ public class ArticleDao {
 		int articlesPerPage = Constants.ARTICLES_PER_PAGE; // 每页显示15篇文章
 		TypedQuery<Article> query = entityManager
 				.createQuery(
-						"from Article where isPublished = :isPublished order by createDate desc",
+						"from Article where isPublished = :isPublished and type='post' and article_status='public' order by createDate desc",
 						Article.class);
 		query.setParameter("isPublished", Boolean.TRUE);
 		query.setFirstResult(articlesPerPage * (page - 1)).setMaxResults(
@@ -95,7 +95,7 @@ public class ArticleDao {
 
 	public Article findPreArticle(Article article) {
 		TypedQuery<Article> query = entityManager.createQuery(
-				"from Article where createDate > :createDate", Article.class);
+				"from Article where createDate > :createDate and type='post' and article_status='public'", Article.class);
 		query.setParameter("createDate", article.getCreateDate())
 				.setMaxResults(1);
 		Article result = null;
@@ -110,7 +110,7 @@ public class ArticleDao {
 
 	public Article findNextArticle(Article article) {
 		TypedQuery<Article> query = entityManager.createQuery(
-				"from Article where createDate < :createDate", Article.class);
+				"from Article where createDate < :createDate and type='post' and article_status='public'", Article.class);
 		query.setParameter("createDate", article.getCreateDate())
 				.setMaxResults(1);
 		Article result = null;
@@ -160,7 +160,7 @@ public class ArticleDao {
 		entityManager.persist(tag);
 	}
 
-	public Comment findCommentById(String commentId) {
+	public Comment findCommentById(Integer commentId) {
 		TypedQuery<Comment> query = entityManager.createQuery(
 				"from Comment where commentId = :commentId", Comment.class);
 		query.setParameter("commentId", commentId);
@@ -180,6 +180,11 @@ public class ArticleDao {
 	}
 
 	@Transactional
+	public void saveComment(Comment comment) {
+		entityManager.persist(comment);
+	}
+	
+	@Transactional
 	public Comment updateComment(Comment comment) {
 		return entityManager.merge(comment);
 	}
@@ -187,10 +192,10 @@ public class ArticleDao {
 	public Boolean validateUser(User user) {
 		TypedQuery<User> query = entityManager
 				.createQuery(
-						"from User where userName = :userName and password = :password order by createDate desc",
+						"from User where userName = :userName and userPassword = :userPassword order by createDate desc",
 						User.class);
 		query.setParameter("userName", user.getUserName());
-		query.setParameter("password", user.getUserPassword());
+		query.setParameter("userPassword", user.getUserPassword());
 
 		List<User> userList = query.getResultList();
 

@@ -89,7 +89,7 @@
                 <ul>
 	            <#list latestComments as comment>
 				<li>
-					<#noescape><a href="${comment.url}">${comment.name}：</a>${comment.commentContent}</#noescape>
+					<#noescape><a href="${comment.commentUrl}">${comment.commentName}：</a>${comment.commentContent}</#noescape>
 				</li>
 				</#list>
                 </ul>

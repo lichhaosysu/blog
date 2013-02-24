@@ -51,7 +51,7 @@ public class ArticleAction extends BaseAction {
 
 	private List<Comment> latestComments;
 
-	private String replyCommentId;
+	private Integer replyCommentId;
 
 	private User user;
 
@@ -104,6 +104,9 @@ public class ArticleAction extends BaseAction {
 			String content = article.getContent();
 			String summary = article.getSummary();
 			Boolean isPublished = article.getIsPublished();
+			String type = article.getType();
+			String articleStatus = article.getArticleStatus();
+			String commentStatus = article.getCommentStatus();
 
 			article = articleDao.findArticleById(article.getArticleId());
 
@@ -118,6 +121,9 @@ public class ArticleAction extends BaseAction {
 			article.setTitle(title);
 			article.setSummary(summary);
 			article.setIsPublished(isPublished);
+			article.setType(type);
+			article.setArticleStatus(articleStatus);
+			article.setCommentStatus(commentStatus);
 
 			articleDao.update(article);
 		} else {
@@ -126,6 +132,9 @@ public class ArticleAction extends BaseAction {
 			article.setModifyDate(date);
 			article.setVisitCount(0);
 			article.setArticleId(null);
+			article.setType("post");
+			article.setArticleStatus("public");
+			article.setCommentStatus("open");
 			articleDao.save(article);
 		}
 
@@ -204,15 +213,16 @@ public class ArticleAction extends BaseAction {
 	public String commentArticle() throws Exception {
 
 		article = articleDao.findArticleById(article.getArticleId());
-		if (StringUtils.isEmpty(replyCommentId)) {
+		if (replyCommentId == null) {
 			comment.setCreateDate(new Date());
 			comment.setCommentEmail(MD5Util.MD5(comment.getCommentEmail()));
-			article.getComments().add(comment);
-			article = articleDao.update(article);
+			comment.setArticle(article);
+			articleDao.saveComment(comment);
 		} else {
 			Comment replyComment = articleDao.findCommentById(replyCommentId);
 			comment.setCreateDate(new Date());
 			comment.setCommentEmail(MD5Util.MD5(comment.getCommentEmail()));
+			articleDao.saveComment(comment);
 			replyComment.getSubComments().add(comment);
 			articleDao.updateComment(replyComment);
 		}
@@ -334,11 +344,11 @@ public class ArticleAction extends BaseAction {
 		this.nextArticle = nextArticle;
 	}
 
-	public String getReplyCommentId() {
+	public Integer getReplyCommentId() {
 		return replyCommentId;
 	}
 
-	public void setReplyCommentId(String replyCommentId) {
+	public void setReplyCommentId(Integer replyCommentId) {
 		this.replyCommentId = replyCommentId;
 	}
 

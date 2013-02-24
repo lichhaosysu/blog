@@ -25,20 +25,17 @@ package hibernate;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
-import org.junit.After;
-import org.junit.Before;
+import org.hibernate.jdbc.Work;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.lichhao.blog.model.Article;
 import com.lichhao.blog.model.Tag;
@@ -50,10 +47,7 @@ import com.lichhao.blog.model.Tag;
  * 
  * @author Steve Ebersole
  */
-public class TagAndArticleTest {
-	private SessionFactory sessionFactory;
-
-	private Logger logger = LoggerFactory.getLogger(getClass());
+public class TagAndArticleTest extends BaseHibernateConfig {
 
 	@Test
 	public void test() throws Exception {
@@ -66,36 +60,6 @@ public class TagAndArticleTest {
 		createXmlSessionFactory();
 		testTagAndArticle();
 		closeSessionFactory();
-	}
-
-	public void createAnnotataionSessionFactory() throws Exception {
-		// A SessionFactory is set up once for an application
-		// configures settings from the hibernate.cfg.xml located in root
-		// classpath
-
-		Configuration cfg = new Configuration();
-		cfg.configure();
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-				.applySettings(cfg.getProperties()).buildServiceRegistry();
-		sessionFactory = cfg.buildSessionFactory(serviceRegistry);
-	}
-
-	public void createXmlSessionFactory() throws Exception {
-		// A SessionFactory is set up once for an application
-		// configures settings from the hibernate.cfg.xml located in root
-		// classpath
-
-		Configuration cfg = new Configuration();
-		cfg.configure("hbm/hibernate.cfg.xml");
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-				.applySettings(cfg.getProperties()).buildServiceRegistry();
-		sessionFactory = cfg.buildSessionFactory(serviceRegistry);
-	}
-
-	public void closeSessionFactory() throws Exception {
-		if (sessionFactory != null) {
-			sessionFactory.close();
-		}
 	}
 
 	public void testTagAndArticle() {
@@ -193,17 +157,21 @@ public class TagAndArticleTest {
 			logger.debug("------------------------");
 		}
 
-		articles = session.createQuery("from Article").list();
-		for (Article bean : articles) {
-			session.delete(bean);
-		}
+		// hibernate用于执行执行sql语句的机制，还有doReturningWork
+		session.doWork(new Work() {
 
-		List<Tag> tags = session.createQuery("from Tag").list();
-		for (Tag bean : tags) {
-			session.delete(bean);
-		}
+			@Override
+			public void execute(Connection connection) throws SQLException {
+				Statement stmt = connection.createStatement();
+				stmt.executeUpdate("delete from tag_article");
+				stmt.executeUpdate("delete from article");
+				stmt.executeUpdate("delete from tag");
+				stmt.close();
+			}
+		});
 
 		session.getTransaction().commit();
 		session.close();
+
 	}
 }

@@ -43,9 +43,9 @@ $(function() {
 	if (blog_comment) {
 		var obj = JSON.parse(blog_comment);
 
-		$('input[name="comment.name"]').val(obj.name);
-		$('input[name="comment.email"]').val(obj.email);
-		$('input[name="comment.url"]').val(obj.url);
+		$('input[name="comment.commentName"]').val(obj.name);
+		$('input[name="comment.commentEmail"]').val(obj.email);
+		$('input[name="comment.commentUrl"]').val(obj.url);
 
 		$('#toggleComment').text('更改》');
 		$('#comment_name_span').text(obj.name + " ");
@@ -59,9 +59,9 @@ $(function() {
 		var blog_comment_email = CookieUtil.get("blog_comment_email");
 		var blog_comment_url = CookieUtil.get("blog_comment_url");
 
-		$('input[name="comment.name"]').val(blog_comment_name);
-		$('input[name="comment.email"]').val(blog_comment_email);
-		$('input[name="comment.url"]').val(blog_comment_url);
+		$('input[name="comment.commentName"]').val(blog_comment_name);
+		$('input[name="comment.commentEmail"]').val(blog_comment_email);
+		$('input[name="comment.commentUrl"]').val(blog_comment_url);
 
 		$('#toggleComment').text('更改》');
 		$('#comment_name_span').text(blog_comment_name + " ");
@@ -119,13 +119,13 @@ $(function() {
 			return false;
 		}
 
-		var name = $('input[name="comment.name"]').val();
-		var email = $('input[name="comment.email"]').val();
-		var url = $('input[name="comment.url"]').val();
+		var name = $('input[name="comment.commentName"]').val();
+		var email = $('input[name="comment.commentEmail"]').val();
+		var url = $('input[name="comment.commentUrl"]').val();
 
 		if (name == '') {
 			alert('请至少输入你的姓名，用于显示评论！');
-			$('input[name="comment.name"]').focus();
+			$('input[name="comment.commentName"]').focus();
 			return false;
 		}
 

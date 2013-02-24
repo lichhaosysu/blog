@@ -33,16 +33,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.jdbc.Work;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.lichhao.blog.model.Article;
 import com.lichhao.blog.model.Category;
@@ -56,10 +48,7 @@ import com.lichhao.blog.model.Tag;
  * 
  * @author Steve Ebersole
  */
-public class AllInOneTablesTest {
-	private SessionFactory sessionFactory;
-
-	private Logger logger = LoggerFactory.getLogger(getClass());
+public class AllInOneTablesTest extends BaseHibernateConfig {
 
 	@Test
 	public void test() throws Exception {
@@ -72,36 +61,6 @@ public class AllInOneTablesTest {
 		createXmlSessionFactory();
 		testTables();
 		closeSessionFactory();
-	}
-
-	public void createAnnotataionSessionFactory() throws Exception {
-		// A SessionFactory is set up once for an application
-		// configures settings from the hibernate.cfg.xml located in root
-		// classpath
-
-		Configuration cfg = new Configuration();
-		cfg.configure();
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-				.applySettings(cfg.getProperties()).buildServiceRegistry();
-		sessionFactory = cfg.buildSessionFactory(serviceRegistry);
-	}
-
-	public void createXmlSessionFactory() throws Exception {
-		// A SessionFactory is set up once for an application
-		// configures settings from the hibernate.cfg.xml located in root
-		// classpath
-
-		Configuration cfg = new Configuration();
-		cfg.configure("hbm/hibernate.cfg.xml");
-		ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-				.applySettings(cfg.getProperties()).buildServiceRegistry();
-		sessionFactory = cfg.buildSessionFactory(serviceRegistry);
-	}
-
-	public void closeSessionFactory() throws Exception {
-		if (sessionFactory != null) {
-			sessionFactory.close();
-		}
 	}
 
 	public void testTables() {

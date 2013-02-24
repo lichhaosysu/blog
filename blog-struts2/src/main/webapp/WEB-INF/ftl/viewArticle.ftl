@@ -104,10 +104,10 @@
 						<div id="${comment.commentId}" class="comment-panel">
 							<div class="left comment-author">
 								<div class="author-img-left">
-									<img style="margin:0;" alt="${comment.name}" src="http://www.gravatar.com/avatar/${comment.email}?s=200&r=pg&d=${default_person_icon}">
+									<img style="margin:0;" alt="${comment.commentName}" src="http://www.gravatar.com/avatar/${comment.commentEmail}?s=200&r=pg&d=${default_person_icon}">
 								</div>
 								<div class="author-name-left">
-								<a href="${comment.url}" target="_blank" title="${comment.name}">${comment.name}</a>
+								<a href="${comment.commentUrl}" target="_blank" title="${comment.commentName}">${comment.commentName}</a>
 								</div>
 							</div>
 							<div class="left comment-info">
@@ -130,10 +130,10 @@
 						<div class="comment-panel">
 							<div class="right comment-author">
 								<div class="author-img-right">
-									<img style="margin:0;" alt="${comment.name}" src="http://www.gravatar.com/avatar/${comment.email}?s=200&r=pg&d=${default_person_icon}">
+									<img style="margin:0;" alt="${comment.commentName}" src="http://www.gravatar.com/avatar/${comment.commentEmail}?s=200&r=pg&d=${default_person_icon}">
 								</div>
 								<div class="author-name-right">
-								<a href="${comment.url}" target="_blank" title="${comment.name}">${comment.name}</a>
+								<a href="${comment.commentUrl}" target="_blank" title="${comment.commentName}">${comment.commentName}</a>
 								</div>
 							</div>
 							
@@ -171,7 +171,7 @@
 						</tr>
 						<tr id="comment_name">
 							<td width="10%" style="width:200px">
-								<input type="text" name="comment.name">
+								<input type="text" name="comment.commentName">
 							</td>
 							<td colspan="2" width="90%">
 								姓名（必填）
@@ -179,7 +179,7 @@
 						</tr>
 						<tr id="comment_email">
 							<td>
-								<input type="text" name="comment.email">
+								<input type="text" name="comment.commentEmail">
 							</td>
 							<td colspan="2">
 								邮箱（用于显示此邮箱在<a href="http://cn.gravatar.com/" target="_blank">Gravatar</a>上注册的头像，不会被保存）
@@ -187,7 +187,7 @@
 						</tr>
 						<tr id="comment_url">
 							<td>
-								<input type="text" name="comment.url">
+								<input type="text" name="comment.commentUrl">
 							</td>
 							<td colspan="2">
 								URL（你的博客或网站链接分享）
@@ -235,7 +235,7 @@
                 <ul>
 	            <#list latestComments as comment>
 				<li>
-					<a href="${comment.url}">${comment.name}：</a>${comment.commentContent}
+					<a href="${comment.commentUrl}">${comment.commentName}：</a>${comment.commentContent}
 				</li>
 				</#list>
                 </ul>

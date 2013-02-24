@@ -1,15 +1,15 @@
-drop table if exists category;
-drop table if exists article;
-drop table if exists comment;
-drop table if exists tag;
 drop table if exists tag_article;
+drop table if exists comment;
+drop table if exists article;
+drop table if exists category;
+drop table if exists tag;
 drop table if exists user;
 
 --
 -- 表的结构 'category'
 --
 
-CREATE TABLE category(
+CREATE TABLE if not exists category(
 	cat_id int not null AUTO_INCREMENT comment '类别标识',
 	cat_name varchar(250) comment '类别名称',
 	create_date datetime comment '创建时间',
@@ -21,7 +21,7 @@ COMMENT ON TABLE category is '文章分类表';
 --
 -- 表的结构 'article'
 --
-CREATE TABLE article (
+CREATE TABLE if not exists article (
 	article_id int not null AUTO_INCREMENT comment '文章标识',
 	title varchar(250) comment '文章标题',
 	content longtext comment '文章内容',
@@ -46,7 +46,7 @@ COMMENT ON TABLE article is '文章表';
 -- 表的结构 'comment'
 --
 
-CREATE TABLE comment (
+CREATE TABLE if not exists comment (
 	comment_id int not null AUTO_INCREMENT comment '评论标识',
 	comment_content mediumtext comment '评论内容',
 	comment_article_id varchar(32) comment '该评论对应的文章标识',
@@ -67,7 +67,7 @@ COMMENT ON TABLE comment is '评论表';
 -- 表的结构 'tag'
 --
 
-CREATE TABLE tag (
+CREATE TABLE if not exists tag (
  tag_id int not null AUTO_INCREMENT comment '标签标识',
  tag_name varchar(250) comment '标签名称',
  create_date datetime comment '创建时间',
@@ -80,7 +80,7 @@ COMMENT ON TABLE tag is '标签表';
 -- 表的结构 'tag_article'
 --
 
-CREATE TABLE tag_article (
+CREATE TABLE if not exists tag_article (
  ta_tag_id int comment '标签标识',
  ta_article_id varchar(32) comment '文章标识',
  constraint fk_tag FOREIGN KEY (ta_tag_id) references tag(tag_id),
@@ -93,7 +93,7 @@ COMMENT ON TABLE tag_article is '标签文章关系表';
 -- 表的结构 'user'
 --
 
-CREATE TABLE user (
+CREATE TABLE if not exists user (
  user_id int not null AUTO_INCREMENT comment '用户标识',
  user_name varchar(250) comment '用户名称',
  user_password varchar(250) comment '用户密码',
@@ -102,3 +102,5 @@ CREATE TABLE user (
 );
 
 COMMENT ON TABLE user is '用户表';
+
+insert into user(user_name,user_password,create_date) values ('admin','admin','2013-02-24 12:21:23');

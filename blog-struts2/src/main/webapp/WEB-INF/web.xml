@@ -5,6 +5,11 @@
 	version="2.5">
 	<display-name>blog-struts2</display-name>
 
+	<!-- H2嵌入数据库 -->
+	<listener>
+		<listener-class>com.lichhao.blog.listener.LocateH2DatabaseListener</listener-class>
+	</listener>
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
