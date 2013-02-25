@@ -38,11 +38,11 @@
 				<tbody>
 					<tr>
 						<td><label>用户名：</label></td>
-						<td><input type="text" name="user.userName" /></td>
+						<td><input type="text" name="user.userName" value="admin"/></td>
 					</tr>
 					<tr>
 						<td><label>密码：</label></td>
-						<td><input type="password"" name="user.userPassword" /></td>
+						<td><input type="password"" name="user.userPassword" value="admin"/></td>
 					</tr>
 					<tr>
 						<td></td>

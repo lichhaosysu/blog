@@ -59,9 +59,9 @@
 	<!-- 定义jdbc模版Bean -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
 		p:dataSource-ref="dataSource" />
-
+<!--  
 	<jdbc:initialize-database data-source="dataSource">
 		<jdbc:script encoding="UTF-8" location="classpath:h2/blog-h2.sql" />
 	</jdbc:initialize-database>
-
+-->
 </beans>

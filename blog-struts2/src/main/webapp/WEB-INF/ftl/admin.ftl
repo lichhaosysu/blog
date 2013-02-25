@@ -46,6 +46,9 @@
 							<input type="hidden" name="article.isPublished" value="false">
 							<input type="hidden" name="article.visitCount" value="${(article.visitCount)!}">
 							<input type="hidden" name="article.createDate" value="${(article.createDate)!}">
+							<input type="hidden" name="article.type" value="${(article.type)!}">
+							<input type="hidden" name="article.articleStatus" value="${(article.articleStatus)!}">
+							<input type="hidden" name="article.commentStatus" value="${(article.commentStatus)!}">
 							<div>
 						        <label>标题（不能为空）：</label>
 						        <input type="text" name="article.title" value="${(article.title)!}">
