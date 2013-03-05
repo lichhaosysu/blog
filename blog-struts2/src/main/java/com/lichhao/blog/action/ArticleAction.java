@@ -12,7 +12,11 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.lichhao.blog.common.BaseAction;
 import com.lichhao.blog.dao.ArticleDao;
+import com.lichhao.blog.dao.CommentDao;
+import com.lichhao.blog.dao.TagDao;
+import com.lichhao.blog.dao.UserDao;
 import com.lichhao.blog.model.Article;
 import com.lichhao.blog.model.Comment;
 import com.lichhao.blog.model.Tag;
@@ -26,6 +30,15 @@ public class ArticleAction extends BaseAction {
 
 	@Autowired
 	private ArticleDao articleDao;
+
+	@Autowired
+	private TagDao tagDao;
+
+	@Autowired
+	private CommentDao commentDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	private Article article;
 
@@ -64,7 +77,7 @@ public class ArticleAction extends BaseAction {
 
 		if (isLogin == null) {
 			if (user != null) {
-				Boolean isValidate = articleDao.validateUser(user);
+				Boolean isValidate = userDao.validateUser(user);
 				if (isValidate) {
 					// request.getSession().setAttribute("isLogin", isValidate);
 					session.put("isLogin", isValidate);
@@ -77,12 +90,12 @@ public class ArticleAction extends BaseAction {
 			}
 		}
 
-		tags = articleDao.findAllTags();
-		articles = articleDao.findAllArticles();
+		tags = tagDao.findAll();
+		articles = articleDao.findAll();
 
 		// 修改文章时，根据传递的article.articleId查找文章
 		if (article != null) {
-			article = articleDao.findArticleById(article.getArticleId());
+			article = articleDao.find(article.getArticleId());
 		}
 
 		return "success";
@@ -96,7 +109,7 @@ public class ArticleAction extends BaseAction {
 					"actionName", "admin" }) })
 	public String saveArticle() throws Exception {
 
-		if (article.getArticleId()!=null) {
+		if (article.getArticleId() != null) {
 
 			// 先将改动保存起来
 			// TODO:可以优化
@@ -108,7 +121,7 @@ public class ArticleAction extends BaseAction {
 			String articleStatus = article.getArticleStatus();
 			String commentStatus = article.getCommentStatus();
 
-			article = articleDao.findArticleById(article.getArticleId());
+			article = articleDao.find(article.getArticleId());
 
 			Date date = new Date();
 			article.setModifyDate(date);
@@ -143,12 +156,12 @@ public class ArticleAction extends BaseAction {
 			String[] tags = tag.split("[,|，]");
 
 			for (String tagName : tags) {
-				Tag tag = articleDao.findTagByTagName(tagName);
+				Tag tag = tagDao.findTagByTagName(tagName);
 				if (tag == null) {
 					tag = new Tag();
 					tag.setTagName(tagName);
 					tag.setCreateDate(new Date());
-					articleDao.saveTag(tag);
+					tagDao.save(tag);
 				}
 				article.getTags().add(tag);
 			}
@@ -175,7 +188,7 @@ public class ArticleAction extends BaseAction {
 			throw new IllegalStateException("要访问的页数超出范围！");
 		}
 
-		latestComments = articleDao.finLatestComments();
+		latestComments = commentDao.finLatestComments();
 
 		return "success";
 	}
@@ -184,8 +197,8 @@ public class ArticleAction extends BaseAction {
 	public String showTags() throws Exception {
 
 		latestArticles = articleDao.findLatestArticles();
-		latestComments = articleDao.finLatestComments();
-		tags = articleDao.findAllTags();
+		latestComments = commentDao.finLatestComments();
+		tags = tagDao.findAll();
 
 		return "success";
 	}
@@ -194,17 +207,18 @@ public class ArticleAction extends BaseAction {
 	public String showArticleByTag() throws Exception {
 
 		latestArticles = articleDao.findLatestArticles();
-		latestComments = articleDao.finLatestComments();
-		thisTag = articleDao.findTagByTagId(thisTag.getTagId());
-		
+		latestComments = commentDao.finLatestComments();
+		thisTag = tagDao.find(thisTag.getTagId());
+
 		return "success";
 	}
+
 	@Action(value = "aboutMe", results = { @Result(name = "success", location = "/WEB-INF/ftl/aboutMe.ftl") })
 	public String aboutMe() throws Exception {
 
 		latestArticles = articleDao.findLatestArticles();
-		latestComments = articleDao.finLatestComments();
-		
+		latestComments = commentDao.finLatestComments();
+
 		return "success";
 	}
 
@@ -212,19 +226,19 @@ public class ArticleAction extends BaseAction {
 			"actionName", "viewArticle?article.articleId=${article.articleId}" }) })
 	public String commentArticle() throws Exception {
 
-		article = articleDao.findArticleById(article.getArticleId());
+		article = articleDao.find(article.getArticleId());
 		if (replyCommentId == null) {
 			comment.setCreateDate(new Date());
 			comment.setCommentEmail(MD5Util.MD5(comment.getCommentEmail()));
 			comment.setArticle(article);
-			articleDao.saveComment(comment);
+			commentDao.save(comment);
 		} else {
-			Comment replyComment = articleDao.findCommentById(replyCommentId);
+			Comment replyComment = commentDao.find(replyCommentId);
 			comment.setCreateDate(new Date());
 			comment.setCommentEmail(MD5Util.MD5(comment.getCommentEmail()));
-			articleDao.saveComment(comment);
+			commentDao.save(comment);
 			replyComment.getSubComments().add(comment);
-			articleDao.updateComment(replyComment);
+			commentDao.update(replyComment);
 		}
 
 		// request.getRequestDispatcher("viewArticle.action?article.articleId="+article.getArticleId()+"#comments").forward(request,
@@ -241,8 +255,8 @@ public class ArticleAction extends BaseAction {
 		request.setAttribute("default_person_icon", URLEncoder.encode(
 				"http://lichhao.com/blog/img/default-person.png", "utf-8"));
 		latestArticles = articleDao.findLatestArticles();
-		latestComments = articleDao.finLatestComments();
-		article = articleDao.findArticleById(article.getArticleId());
+		latestComments = commentDao.finLatestComments();
+		article = articleDao.find(article.getArticleId());
 		article.setVisitCount(article.getVisitCount() + 1);
 
 		article = articleDao.update(article);
@@ -256,7 +270,7 @@ public class ArticleAction extends BaseAction {
 
 	@Action(value = "editArticle", results = { @Result(name = "editArticle", location = "/jsp/index.jsp") })
 	public String editArticle() throws Exception {
-		article = articleDao.findArticleById(article.getArticleId());
+		article = articleDao.find(article.getArticleId());
 		return "editArticle";
 	}
 
@@ -266,7 +280,7 @@ public class ArticleAction extends BaseAction {
 			@Result(type = "redirectAction", name = "redirectToAdmin", params = {
 					"actionName", "admin" }) })
 	public String deleteArticle() throws Exception {
-		article = articleDao.findArticleById(article.getArticleId());
+		article = articleDao.find(article.getArticleId());
 		article.getTags().clear();
 		articleDao.delete(article);
 		return "redirectToAdmin";

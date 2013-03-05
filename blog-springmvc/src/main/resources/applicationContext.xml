@@ -30,38 +30,5 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="cacheSeconds" value="60" />
 	</bean>
-	<bean class="javaget.crawl.imanhua.ComicCrawlerForImanhua">
-		<property name="comicsToCraw">
-			<list>
-				<value>http://www.imanhua.com/comic/177/</value>
-				<value>http://www.imanhua.com/comic/1119/</value>
-			</list>
-		</property>
-	</bean>
-	<!--  
-	<bean id="crawler" class="javaget.crawl.Crawler">
-	</bean>
 
-	<bean id="crawJobDetail"
-		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-		<property name="targetObject" ref="crawler" />
-		<property name="targetMethod" value="crawl" />
-	</bean>
-
-	<bean id="crawlTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<property name="jobDetail" ref="crawJobDetail" />
-		<property name="cronExpression">
-			<value>0 0/5 23 ? * *</value>
-		</property>
-	</bean>
-
-	<bean id="startQuartz" lazy-init="false"
-		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<property name="triggers">
-			<list>
-				<ref bean="crawlTrigger" />
-			</list>
-		</property>
-	</bean>
-	-->
 </beans>

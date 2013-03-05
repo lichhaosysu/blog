@@ -64,4 +64,17 @@
 		<jdbc:script encoding="UTF-8" location="classpath:h2/blog-h2.sql" />
 	</jdbc:initialize-database>
 -->
+
+	<!-- 设置系统属性，跳过ehcache更新检查 -->
+	<bean
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" value="#{@systemProperties}" />
+		<property name="targetMethod" value="putAll" />
+		<property name="arguments">
+			<props>
+				<prop key="net.sf.ehcache.skipUpdateCheck">true</prop>
+			</props>
+		</property>
+	</bean>
+
 </beans>

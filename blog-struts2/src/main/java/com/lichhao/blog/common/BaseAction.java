@@ -1,4 +1,4 @@
-package com.lichhao.blog.action;
+package com.lichhao.blog.common;
 
 import java.util.Map;
 
