@@ -84,22 +84,19 @@
   					</div>		
 				</div>
 			</#list>
+				<#if catId??>
+				<#else>
 				<div class="pagination">
 					<#if page gt 1>
 					<a href="index.action?page=${page-1}">« 上一页</a> 
 					</#if>
 					<@pagination page=page total=total />
-					<#--
-					<span class="current">1</span> 
-					<a href="#">2</a> 
-					<a href="#">3</a> 
-					<a href="#">4</a> 
-					<a href="#">5</a> 
-					-->
 					<#if page lt total>
 					<a href="index.action?page=${page+1}">下一页 »</a> 
 					</#if>
-				</div>
+				</div>				
+				</#if>
+
 		<#else>
 		<span>还没有写任何博文，赶快<a href="admin.action">去写一篇</a>吧</span>
 		</#if>
@@ -126,6 +123,16 @@
 	            <#list latestComments as comment>
 				<li>
 					<#noescape><a href="${comment.commentUrl}">${comment.commentName}：</a>${comment.commentContent}</#noescape>
+				</li>
+				</#list>
+                </ul>
+            </div>
+            <div class="local_block">
+            	<h5>文章分类</h5>
+            	<ul>
+	            <#list categories as category>
+				<li>
+					<#noescape><a href="index.action?catId=${category.catId}">${category.catName}</a></#noescape>
 				</li>
 				</#list>
                 </ul>

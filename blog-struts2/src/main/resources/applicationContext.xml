@@ -24,6 +24,7 @@
 	<bean id="commentDao" class="com.lichhao.blog.dao.CommentDao" />
 	<bean id="tagDao" class="com.lichhao.blog.dao.TagDao" />
 	<bean id="userDao" class="com.lichhao.blog.dao.UserDao" />
+	<bean id="categoryDao" class="com.lichhao.blog.dao.CategoryDao" />
 	
 	<!-- scans the classpath for annotated components (including @Repostory 
 		and @Service that will be auto-registered as Spring beans -->

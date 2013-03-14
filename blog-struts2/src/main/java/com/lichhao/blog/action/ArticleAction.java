@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -14,10 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lichhao.blog.common.BaseAction;
 import com.lichhao.blog.dao.ArticleDao;
+import com.lichhao.blog.dao.CategoryDao;
 import com.lichhao.blog.dao.CommentDao;
 import com.lichhao.blog.dao.TagDao;
 import com.lichhao.blog.dao.UserDao;
 import com.lichhao.blog.model.Article;
+import com.lichhao.blog.model.Category;
 import com.lichhao.blog.model.Comment;
 import com.lichhao.blog.model.Tag;
 import com.lichhao.blog.model.User;
@@ -39,6 +42,9 @@ public class ArticleAction extends BaseAction {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private CategoryDao categoryDao;
 
 	private Article article;
 
@@ -67,6 +73,10 @@ public class ArticleAction extends BaseAction {
 	private Integer replyCommentId;
 
 	private User user;
+
+	private List<Category> categories;
+
+	private Integer catId;
 
 	@Action(value = "admin", results = {
 			@Result(name = "success", type = "freemarker", location = "/WEB-INF/ftl/admin.ftl"),
@@ -177,8 +187,12 @@ public class ArticleAction extends BaseAction {
 		if (page == null) {
 			page = 1; // 默认第一页
 		}
-
-		articles = articleDao.findArticlesByPage(page);
+		
+		if(catId!=null){
+			articles = articleDao.findArticlesByCategory(catId);
+		}else{
+			articles = articleDao.findArticlesByPage(page);
+		}
 		latestArticles = articleDao.findLatestArticles();
 		Integer articlesTotal = articleDao.getArticlesTotal();
 		total = (articlesTotal + Constants.ARTICLES_PER_PAGE - 1)
@@ -189,6 +203,7 @@ public class ArticleAction extends BaseAction {
 		}
 
 		latestComments = commentDao.finLatestComments();
+		categories = categoryDao.findAll();
 
 		return "success";
 	}
@@ -396,6 +411,22 @@ public class ArticleAction extends BaseAction {
 
 	public void setThisTag(Tag thisTag) {
 		this.thisTag = thisTag;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+
+	public Integer getCatId() {
+		return catId;
+	}
+
+	public void setCatId(Integer catId) {
+		this.catId = catId;
 	}
 
 }

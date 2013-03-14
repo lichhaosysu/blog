@@ -35,7 +35,7 @@ public class ArticleDao extends BaseDao<Article> {
 	 * @param page
 	 * @return 文章类型List列表
 	 */
-	public List<Article> findArticlesByPage(int page) {
+	public List<Article> findArticlesByPage(Integer page) {
 
 		int articlesPerPage = Constants.ARTICLES_PER_PAGE; // 每页显示15篇文章
 		TypedQuery<Article> query = entityManager
@@ -48,6 +48,15 @@ public class ArticleDao extends BaseDao<Article> {
 		List<Article> articles = query.getResultList();
 		return articles;
 
+	}
+
+	public List<Article> findArticlesByCategory(Integer catId) {
+		TypedQuery<Article> query = entityManager
+				.createQuery(
+						"from Article where isPublished = true and type='post' and article_status='public' and category.catId = :catId order by createDate desc",
+						Article.class);
+		query.setParameter("catId", catId);
+		return query.getResultList();
 	}
 
 	/**
