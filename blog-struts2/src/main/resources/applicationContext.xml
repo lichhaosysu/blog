@@ -20,11 +20,11 @@
 	<!-- dataSource pool config -->
 	<import resource="classpath:dataSource.xml" />
 	
-	<bean id="articleDao" class="com.lichhao.blog.dao.ArticleDao" />
-	<bean id="commentDao" class="com.lichhao.blog.dao.CommentDao" />
-	<bean id="tagDao" class="com.lichhao.blog.dao.TagDao" />
-	<bean id="userDao" class="com.lichhao.blog.dao.UserDao" />
-	<bean id="categoryDao" class="com.lichhao.blog.dao.CategoryDao" />
+	<bean id="articleDao" class="com.lichhao.blog.dao.ArticleDao" depends-on="dataSource,jdbcTemplate"/>
+	<bean id="commentDao" class="com.lichhao.blog.dao.CommentDao" depends-on="dataSource"/>
+	<bean id="tagDao" class="com.lichhao.blog.dao.TagDao" depends-on="dataSource"/>
+	<bean id="userDao" class="com.lichhao.blog.dao.UserDao" depends-on="dataSource"/>
+	<bean id="categoryDao" class="com.lichhao.blog.dao.CategoryDao" depends-on="dataSource"/>
 	
 	<!-- scans the classpath for annotated components (including @Repostory 
 		and @Service that will be auto-registered as Spring beans -->
