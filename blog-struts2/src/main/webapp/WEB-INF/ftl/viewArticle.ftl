@@ -57,7 +57,7 @@
 				    <ul class="blog_categories">
 					    <strong>标签：</strong> 
 		    			<#list article.tags as tag>
- 							<li><a href="#">${tag.tagName}</a></li> 
+ 							<li><a href="showArticleByTag.action?thisTag.tagId=${tag.tagId}">${tag.tagName}</a></li> 
 				    	</#list>
 				    </ul>
 				    <div class="news_tag"></div>
