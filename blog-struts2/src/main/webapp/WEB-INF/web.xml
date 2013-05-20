@@ -62,7 +62,7 @@
 		<servlet-name>DruidStatView</servlet-name>
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
-	
+	<!-- 
 	<servlet>
 		<servlet-name>springspy</servlet-name>
 		<servlet-class>com.lichhao.springspy.SpringSpyMonitorServlet</servlet-class>
@@ -71,7 +71,7 @@
 		<servlet-name>springspy</servlet-name>
 		<url-pattern>/springspy/*</url-pattern>
 	</servlet-mapping>
-
+	-->
 	<welcome-file-list>
 		<welcome-file>redirect.jsp</welcome-file>
 	</welcome-file-list>

@@ -243,11 +243,7 @@
 			<artifactId>cglib</artifactId>
 			<version>${cglib.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.lichhao</groupId>
-			<artifactId>springspy</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
 	</dependencies>
 
 	<build>
